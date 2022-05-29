@@ -51,5 +51,30 @@ psql -h [hostname] -p [port] [dbname] [username]
 
 To get out of psql, type: <code>\q</code>
 
+<hr>
+
+# Connect to PostgreSQL by pgAdmin
+
+After installing pgAdmin and execute it.
+
+Register server
+
+<img width="1277" alt="Screen Shot 2022-05-29 at 16 54 30" src="https://user-images.githubusercontent.com/89285959/170860466-4fa7c480-7725-4130-b5ff-f234e1207df3.png">
+
+Enter a name, hostname, port 5432(default), database name and username.
+
+<img width="1280" alt="Screen Shot 2022-05-29 at 16 54 48" src="https://user-images.githubusercontent.com/89285959/170860632-3ea3ece1-f6eb-4fb1-ab69-f3e1f7c16867.png">
+<img width="1280" alt="Screen Shot 2022-05-29 at 17 04 36" src="https://user-images.githubusercontent.com/89285959/170860646-09589c68-e6cd-44a5-9b11-c83898a75e4b.png">
+
+Done
+
+<img width="1279" alt="Screen Shot 2022-05-29 at 16 59 17" src="https://user-images.githubusercontent.com/89285959/170860663-09b97954-1112-4110-863d-6cdc1d0747e8.png">
 
 <hr>
+
+
+
+
+
+
+
