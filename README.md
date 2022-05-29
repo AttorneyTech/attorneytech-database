@@ -20,10 +20,11 @@ brew services start postgresql
 # Creating a Database
 
 ```
-createdb <db-name>
+createdb <dbname>
 ```
 
-![Screen Shot 2022-05-29 at 15 56 03](https://user-images.githubusercontent.com/89285959/170858231-e3850a49-dfde-4378-84a5-6adc7fc44621.png)
+<img width="532" alt="Screen Shot 2022-05-29 at 16 31 57" src="https://user-images.githubusercontent.com/89285959/170859367-eec0b785-4a74-4051-8c13-53ac32e15c8e.png">
+
 
 If this produces no response then this step was successful 
 
@@ -31,17 +32,22 @@ and you can skip over the remainder of this section.
 
 <hr>
 
-# Accessing a Database
+# Accessing a Database on localhost
 
 ```
-psql <db-name>
+psql <dbname>
 ```
 
 Running the PostgreSQL interactive terminal program, called psql, 
 
 which allows you to interactively enter, edit, and execute SQL commands.
 
-![Screen Shot 2022-05-29 at 16 02 33](https://user-images.githubusercontent.com/89285959/170858418-8ad7f275-7039-4da8-9db9-499784d5a99b.png)
+```
+psql -h [hostname] -p [port] [dbname] [username]
+```
+
+<img width="1243" alt="Screen Shot 2022-05-29 at 16 37 23" src="https://user-images.githubusercontent.com/89285959/170859566-de8a9594-176f-468b-8491-e948b063e420.png">
+
 
 To get out of psql, type: <code>\q</code>
 
