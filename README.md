@@ -32,7 +32,7 @@ and you can skip over the remainder of this section.
 
 <hr>
 
-# Accessing a Database on localhost
+# Accessing a Database on localhost by CLI
 
 ```
 psql <dbname>
