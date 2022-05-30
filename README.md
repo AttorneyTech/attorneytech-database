@@ -1,23 +1,29 @@
 # Choose PostgreSQL as the database for this project.
 
-# Download PostgreSQL
+<h2>Download PostgreSQL</h2>
 
-Downloading PostgreSQL by homebrew
+1. Downloading PostgreSQL by homebrew
+
+
 ```
 brew install postgresql
 ```
 
-Start PostgreSQL service
+
+2. Start PostgreSQL service
+
 
 ```
 brew services start postgresql
 ```
 
+
 ![Screen Shot 2022-05-29 at 15 52 31](https://user-images.githubusercontent.com/89285959/170858159-f9028907-bdd3-4c59-b702-6f472949d96e.png)
+
 
 <hr>
 
-# Creating a Database
+<h2>Creating a Database</h2>
 
 ```
 createdb <dbname>
@@ -26,21 +32,20 @@ createdb <dbname>
 <img width="532" alt="Screen Shot 2022-05-29 at 16 31 57" src="https://user-images.githubusercontent.com/89285959/170859367-eec0b785-4a74-4051-8c13-53ac32e15c8e.png">
 
 
-If this produces no response then this step was successful 
+If this produces no response then this step was successful and you can skip over the remainder of this section.
 
-and you can skip over the remainder of this section.
 
 <hr>
 
-# Accessing a Database on localhost by CLI
+<h2>Accessing a Database on localhost by CLI</h2>
+
+1. Running the PostgreSQL interactive terminal program, called psql, which allows you to interactively enter, edit, and execute SQL commands.
 
 ```
 psql <dbname>
 ```
 
-Running the PostgreSQL interactive terminal program, called psql, 
-
-which allows you to interactively enter, edit, and execute SQL commands.
+or
 
 ```
 psql -h [hostname] -p [port] [dbname] [username]
@@ -53,7 +58,7 @@ To get out of psql, type: <code>\q</code>
 
 <hr>
 
-# Connect to PostgreSQL by pgAdmin
+<h2>Connect to PostgreSQL by pgAdmin</h2>
 
 After installing pgAdmin and execute it.
 
@@ -72,6 +77,41 @@ Done
 
 <hr>
 
+<h2>Run PostgreSQL within Docker container</h2>
+
+1. Pull the image
+
+```
+docker pull NAME:TAG
+```
+<img width="812" alt="Screen Shot 2022-05-31 at 00 08 58" src="https://user-images.githubusercontent.com/89285959/171034210-4aca8ce2-0028-418f-9350-ad8f18c11f67.png">
+
+<img width="618" alt="Screen Shot 2022-05-31 at 00 09 10" src="https://user-images.githubusercontent.com/89285959/171034264-25ebe8c9-ec2c-4065-a434-8415413524be.png">
+
+if not add tag, it will pull the latest version of image.
+
+2. Create and run container.
+
+```
+docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+```
+
+<img width="1265" alt="Screen Shot 2022-05-31 at 00 25 40" src="https://user-images.githubusercontent.com/89285959/171035148-a495a5c8-9e0c-43a7-9bc0-ce216ede37c0.png">
+
+<code>-d</code>--deatch<br>Run container in background and print container ID<br>
+<code>--name</code><br>Container name<br>
+<code>-p</code>--publish<br>set port<br>
+<code>-e</code>--env<br>Set environment variable, set the username and password in postgresql<br>
+
+and finally if we want to enter the CLI in postgre:
+
+```
+docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+```
+<img width="763" alt="Screen Shot 2022-05-31 at 00 35 10" src="https://user-images.githubusercontent.com/89285959/171036256-03e8ee36-ce5b-4a49-b542-c5ff157480c9.png">
+
+<code>-i</code>  --interactive<br>Keep STDIN open even if not attached<br>
+<code>-t</code>  --tty<br>Allocate a pseudo-TTY<br>
 
 
 
