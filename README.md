@@ -24,7 +24,7 @@ $ brew services start postgresql
 ### Creating a Database
 
 ```shell
-$ createdb <dbname>
+$ createdb dbname
 ```
 
 If this produces no response then this step was successful
@@ -39,13 +39,13 @@ $ psql -h [hostname] -p [port] [dbname] [username]
 
 Open pgAdmin and right click on Server
 
-![Click on server](attorneytech-database/images/pgAdmin-guide1.png)
+![Click on server](images/pgAdmin-guide1.png)
 
 Enter a name, hostname, port 5432(default), database name and username.
 
-![Enter a name](attorneytech-database/images/pgAdmin-guide2.png)
+![Enter a name](images/pgAdmin-guide2.png)
 
-![Enter host name](attorneytech-database/images/pgAdmin-guide3.png)
+![Enter host name](images/pgAdmin-guide3.png)
 
 ## Run in docker container
 
@@ -121,7 +121,7 @@ Alternativly, you can get the IP by checking the network that we just set above 
 $ docker network inspect postgres
 ```
 
-![network-container](attorneytech-database/images/network-container.png)
+![network-container](images/network-container.png)
 
 ### Open pgadmin in browser
 
@@ -129,7 +129,7 @@ URL: `http://localhost:5050`
 
 Enter the information we just got.
 
-![pgAdmin-setting](attorneytech-database/images/pgAdmin-guide4.png)
+![pgAdmin-setting](images/pgAdmin-guide4.png)
 
 ## Run containers with docker compose
 
