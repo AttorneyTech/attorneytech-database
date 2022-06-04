@@ -5,7 +5,7 @@
 * [Run PostgreSQL on localhost](#run-postgresql-on-localhost)
 * [PostgreSQL via pgAdmin](##Connect-PostgreSQL-via-pgAdmin)
 * [Run in docker container](##Run-in-docker-container)
-* [Run with docker compose](##Run-with-docker-compose)
+* [Run with docker compose](##Run-containers-with-docker-compose)
 
 ## Run PostgreSQL on localhost
 
