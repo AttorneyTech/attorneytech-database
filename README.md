@@ -113,7 +113,7 @@ In order to run multiple Containers at a time, it is more convenient to use dock
 ### Create `docker-compose.yaml` file
 
 ```yaml
-version: "3.7"
+version: '3.7'
 services:
   db:
     image: postgres:14.3
@@ -132,7 +132,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: YOUR_EMAIL
       PGADMIN_DEFAULT_PASSWORD: YOUR_PASSWORD
     ports:
-      - "5050:80"
+      - '5050:80'
     volumes:
       - PG_VOLUME_NAME:/var/lib/pgadmin
 volumes:
