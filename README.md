@@ -24,7 +24,7 @@ $ brew services start postgresql
 ### Creating a Database
 
 ```shell
-$ createdb dbname
+$ createdb database_name
 ```
 
 If this produces no response then this step was successful
@@ -32,7 +32,7 @@ If this produces no response then this step was successful
 You can then connect to the database with:
 
 ```shell
-$ psql -h [hostname] -p [port] [dbname] [username]
+$ psql database_name
 ```
 
 ## Connect PostgreSQL via pgAdmin
@@ -41,7 +41,7 @@ Open pgAdmin and right click on Server
 
 ![Click on server](images/pgAdmin-guide1.png)
 
-Enter a name, hostname, port 5432(default), database name and username.
+Enter a name, hostname, port 5432 (default), database name and username.
 
 ![Enter a name](images/pgAdmin-guide2.png)
 
@@ -80,48 +80,23 @@ There are many option parameters you can choose by yourself
 And here we're going to set：
 
 ```shell
-$ docker run -p 5432:5432 \
-             -e POSTGRES USER=postgres \
-             -e POSTGRES PASSWORD=password
-             --net=postgres \
-             -d postgres:14.3
+$ docker run -e POSTGRES_USER=your_name \
+             -e POSTGRES_PASSWORD=YOUR_PASSWORD
+             --net=YOUR_NETWORK_NAME \
+             -d \
+             postgres:14.3 \   
 ```
 
 ```shell
 $ docker run -p 5050:80 \
-             -e PGADMIN DEFAULT EMAIL=user@domain.com \
-             -e PGADMIN_DEFAULT_PASSWORD=password
-             --net=postgres \
-             -d dpage/pgadmin4
+             -e PGADMIN_DEFAULT_EMAIL=YOUR_EMAIL \
+             -e PGADMIN_DEFAULT_PASSWORD=YOUR_PASSWORD \
+             --net=YOUR_NETWORK_NAME \
+             -d \
+             dpage/pgadmin4 \
 ```
 
-We set`-p` bound the localhost port to containers port, and set `--net` deploy two containers to the same network.And we want two containers run in background, so set `-d` here.
-
-And if you want to enter the CLI in postgre:
-
-```shell
-$ docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
-```
-
-### Get the IP address of postgres
-
-```shell
-$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container-name>
-```
-
-When Docker creates a container, it will randomly select an address for the container to use within the private network range defined in RFC 1918, which is also commonly known as the same network segment.
-
-Using this bridge, the container can communicate with the host system and other containers.
-
-* [瞭解 Docker 的預設網路設置][link1]
-
-Alternativly, you can get the IP by checking the network that we just set above `docker network inspect`.
-
-```shell
-$ docker network inspect postgres
-```
-
-![network-container](images/network-container.png)
+We set `-p` bound the localhost port to containers port, and set `--net` deploy two containers to the same network, and we want two containers run in background, so set `-d` here.
 
 ### Open pgadmin in browser
 
@@ -135,7 +110,7 @@ Enter the information we just got.
 
 In order to run multiple Containers at a time, it is more convenient to use docker compose
 
-### Create `.yaml` file
+### Create `docker-compose.yaml` file
 
 ```yaml
 version: "3.7"
@@ -144,40 +119,44 @@ services:
     image: postgres:14.3
     restart: always
     environment:
-      POSTGRES_DB: postgres
       POSTGRES_USER: YOUR_USER_NAME
       POSTGRES_PASSWORD: YOUR_PASSWORD
-      PGDATA: /var/lib/postgresql/data
     volumes:
-      - db-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - DB_VOLUME_NAME:/var/lib/postgresql/data
   pgadmin:
+    depends_on:
+      - db
     image: dpage/pgadmin4
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: YOUR_EMAIL
       PGADMIN_DEFAULT_PASSWORD: YOUR_PASSWORD
-      PGADMIN_LISTEN_PORT: 80
     ports:
       - "5050:80"
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - PG_VOLUME_NAME:/var/lib/pgadmin
 volumes:
-  db-data:
-  pgadmin-data:
+  DB_VOLUME_NAME:
+  PG_VOLUME_NAME:
 ```
+
+>This is the sample depends on docker-compose version 3.7, note that may have differences among the different versions.
+
+1. `POSTGRES_USER` Naming the username by yourself if necessary, otherwise `postgres` will be the default name.
+
+2. `POSTGRES_PASSWORD`
+It must not be empty or undefined, you must specify to it.
+
+3. `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD` are also have to be defined by yourself.
+
+4. `volumes` Naming the volumes name by yourself.
 
 ### Run containers
 
 ```shell
-$ docker-compose -f docker-compose.yaml up -d
+$ docker-compose up -d
 ```
 
-Put the `.yaml` file in the same folder as your project and run the command above.
+Put the `docker-compose.yaml` file in the same folder as your project and run the command above.
 
 At the same time, `docker-compose` will also create a network and put the container in it.
-
-So we can check the IP of postgres in the [same way](###Get-the-IP-address-of-postgres).
-
-[link1]: https://mileslin.github.io/2019/05/%E7%9E%AD%E8%A7%A3-Docker-%E7%9A%84%E9%A0%90%E8%A8%AD%E7%B6%B2%E8%B7%AF%E8%A8%AD%E7%BD%AE/ "瞭解 Docker 的預設網路設置"
