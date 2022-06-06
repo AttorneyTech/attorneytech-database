@@ -1,25 +1,23 @@
 version: '3.7'
 services:
-  db:
+  postgres-db:
     image: postgres:14.3
     restart: always
-    environment:
-      POSTGRES_USER: YOUR_USER_NAME
-      POSTGRES_PASSWORD: YOUR_PASSWORD
+    environment: POSTGRES_USER:username
+      POSTGRES_PASSWORD:password
     volumes:
-      - DB_VOLUME_NAME:/var/lib/postgresql/data
+      - postgres_db_data:/var/lib/postgresql/data
   pgadmin:
     depends_on:
-      - db
+      - postgres-db
     image: dpage/pgadmin4
     restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: YOUR_EMAIL
-      PGADMIN_DEFAULT_PASSWORD: YOUR_PASSWORD
+    environment: PGADMIN_DEFAULT_EMAIL:email
+      PGADMIN_DEFAULT_PASSWORD:password
     ports:
       - '5050:80'
     volumes:
-      - PG_VOLUME_NAME:/var/lib/pgadmin
+      - pgadmin_data:/var/lib/pgadmin
 volumes:
-  DB_VOLUME_NAME:
-  PG_VOLUME_NAME:
+  postgres_db_data:
+  pgadmin_data:

@@ -80,20 +80,20 @@ There are many option parameters you can choose by yourself
 And here we're going to set：
 
 ```shell
-$ docker run -e POSTGRES_USER=your_name \
-             -e POSTGRES_PASSWORD=YOUR_PASSWORD
-             --net=YOUR_NETWORK_NAME \
+$ docker run -e POSTGRES_USER=username \
+             -e POSTGRES_PASSWORD=password \
+             --net=network_name \
              -d \
-             postgres:14.3 \   
+             postgres:14.3
 ```
 
 ```shell
 $ docker run -p 5050:80 \
-             -e PGADMIN_DEFAULT_EMAIL=YOUR_EMAIL \
-             -e PGADMIN_DEFAULT_PASSWORD=YOUR_PASSWORD \
-             --net=YOUR_NETWORK_NAME \
+             -e PGADMIN_DEFAULT_EMAIL=email \
+             -e PGADMIN_DEFAULT_PASSWORD=password \
+             --net=YOUR_network_name \
              -d \
-             dpage/pgadmin4 \
+             dpage/pgadmin4
 ```
 
 We set `-p` bound the localhost port to containers port, and set `--net` deploy two containers to the same network, and we want two containers run in background, so set `-d` here.
@@ -112,35 +112,9 @@ In order to run multiple Containers at a time, it is more convenient to use dock
 
 ### Create `docker-compose.yaml` file
 
-```yaml
-version: '3.7'
-services:
-  db:
-    image: postgres:14.3
-    restart: always
-    environment:
-      POSTGRES_USER: YOUR_USER_NAME
-      POSTGRES_PASSWORD: YOUR_PASSWORD
-    volumes:
-      - DB_VOLUME_NAME:/var/lib/postgresql/data
-  pgadmin:
-    depends_on:
-      - db
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: YOUR_EMAIL
-      PGADMIN_DEFAULT_PASSWORD: YOUR_PASSWORD
-    ports:
-      - '5050:80'
-    volumes:
-      - PG_VOLUME_NAME:/var/lib/pgadmin
-volumes:
-  DB_VOLUME_NAME:
-  PG_VOLUME_NAME:
-```
+>Here is a [sample code][docker-compose-example] depends on docker-compose version 3.7, note that may have differences among the different versions.
 
->This is the sample depends on docker-compose version 3.7, note that may have differences among the different versions.
+You can change the following parts in the example code:
 
 1. `POSTGRES_USER` Naming the username by yourself if necessary, otherwise `postgres` will be the default name.
 
@@ -148,8 +122,6 @@ volumes:
 It must not be empty or undefined, you must specify to it.
 
 3. `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD` are also have to be defined by yourself.
-
-4. `volumes` Naming the volumes name by yourself.
 
 ### Run containers
 
@@ -160,3 +132,5 @@ $ docker-compose up -d
 Put the `docker-compose.yaml` file in the same folder as your project and run the command above.
 
 At the same time, `docker-compose` will also create a network and put the container in it.
+
+[docker-compose-example]: <docker-compose-example.yaml>
