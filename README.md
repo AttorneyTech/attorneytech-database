@@ -6,7 +6,7 @@
 * [PostgreSQL via pgAdmin](##Connect-PostgreSQL-via-pgAdmin)
 * [Run in docker container](##Run-in-docker-container)
 * [Run with docker compose](##Run-containers-with-docker-compose)
-* [Database Schema](##-Database-Schema)
+* [Database Schema](##Database-Schema)
 
 ## Run PostgreSQL on localhost
 
@@ -136,182 +136,138 @@ At the same time, `docker-compose` will also create a network and put the contai
 
 ## Database Schema
 
-![Database Schema](images/database-schema.jpg)
+![Database Schema](images/attorneytech-database-schema.jpg)
 
 [docker-compose-example]: <docker-compose-example.yaml>
 
 ### Tables and Columns
 
->This database is designed for law firms in Taiwan, so from this point of view, we need the following tables and columns. In addition, some words will be marked with Traditional Chinese (hereafter referred to as Chinese) explanation. _**In addition, all the tables use PostgreSQL SERIAL pseudo-types creates the id column as Primary Key.**_
+>This database is designed for law firms in Taiwan, so from this point of view, we need the following tables and columns. In addition, some words will be marked with Traditional Chinese (hereafter referred to as Chinese) explanation. _**In addition, all the tables use `PostgreSQL identity column` creates the id column as Primary Key in `GENERATED ALWAYS AS IDENTITY` way and the data type is `INTEGER`.**_
 
-#### `client`
+#### `users`
 
-Client, which means **”當事人“** in Chinese, is one of the members in a legal case. It's need to store the following columns related to the clients.
+Contains _**clients**_ and _**attorneys**_.
+Enter `client` or `attorney` in `role` column to identify that row which one is.
 
-* **id (PK)**
-  * Primary Key.
+```database
+| Column       | Data Type            | Description                    |
+| :---         | :----                | :---                           |
+| id           | INTEGER              | primary key                    |
+| role         | VARCHAR(50) NOT NULL | identify clients or attorneys  |
+| first_name   | VARCHAR(50) NOT NULL | first name                     |
+| last_name    | VARCHAR(50) NOT NULL | last name                      |
+| email        | VARCHAR(50)          | email                          |
+| phone_number | VARCHAR(50)          | phone number                   |
+| addresses_id | INTEGER              | foreign key to addresses table |
+```
 
-* **client_name**
-  * Store client's name in `VARCHAR` data type, the length with limit is 50.
+#### `opposites`
 
-* **client_email**
-  * In order to send mail or received papers to clients, it's need to store client's email in `VARCHAR` data type, the length with limit is 50.
-* **agent_id (FK)**
-  * This is the foreign key of this table. In a firm, each client may be in charge of a different lawyer, so this should be associated with the `agent` table. Store this data to `INTEGER`.
+Contains _**opposite**_ and _**opposite_agent**_.
+Enter `opposite` or `opposite_agent` in `role` column to identify that row which one is.
 
-#### `agent`
+```database
+| Column       | Data Type            | Description                         |
+| :---         | :----                | :---                                |
+| id           | INTEGER              | primary key                         |
+| role         | VARCHAR(50) NOT NULL | identify opposite or opposite_agent |
+| first_name   | VARCHAR(50) NOT NULL | first name                          |
+| last_name    | VARCHAR(50) NOT NULL | last name                           |
+| email        | VARCHAR(50)          | email                               |
+| phone_number | VARCHAR(50)          | phone number                        |
+| addresses_id | INTEGER              | foreign key to addresses table      |
+```
 
-Agent, which means **”代理人“** in Chinese, is one of the members in a legal case. We need to store the following columns related to the agents. Incidentally, since in some legal cases do not necessarily require the attorney, sometimes an agent who is not a attorney, so here we use agent instead of attorney.
-
-* **id (PK)**
-  * Primary Key.
-
-* **agent_name**
-  * Store client's name in `VARCHAR` data type, the length with limit is 50.
-* **agent_address**
-  * Store client's address in `VARCHAR` data type, and since the address in Chinese is usually very long, so length with limit is 100.
-* **agent_email**
-  * Sometimes we need to contact opposite party' agent in email, so here store agent's email in `VARCHAR` data type, the length with limit is 50.
-
-#### `opposite_party`
-
-Opposite party, which means **“對造”** in Chinese, is one of the members in a legal case too. We need to store the following columns related to the opposite party. In addition, as mentioned above, since in some legal cases do not necessarily require the attorney. Therefore, the opposite party may not appoint any agent, so in that case, we need to store the address and email for contact.
-
-* **id (PK)**
-  * Primary Key.
-
-* **opposite_party_name**
-  * Store opposite party's name in `VARCHAR` data type, the length with limit is 50.
-* **opposite_party_address**
-  * Store opposite party's address in `VARCHAR` data type, the length with limit is 100.
-* **opposite_party_email**
-  * Store opposite party's email in `VARCHAR` data type, the length with limit is 50.
-* **agent_id (FK)**
-  * This is the foreign key column of this table, associated with the `agent` table if the opposite party appoint an agent. Store this data to `INTEGER`.
-
-#### `paper_type`
+#### `papers_type`
 
 There are many types of legal case paper. In order to avoid entering the paper type every time you receive or deliver a paper, here build the paper type into a table.
 
-* **id (PK)**
-  * Primary Key.
+```database
+| Column       | Data Type                   | Description           |
+| :---         | :----                       | :---                  |
+| id           | INTEGER                     | primary key           |
+| papers_type  | VARCHAR(50) UNIQUE NOT NULL | likes “起訴狀”,“答辯狀” |
+```
 
-* **paper_type**
-  * Store paper type in `VARCHAR` data type, the length with limit is 50.
+#### `papers`
 
-#### `paper_deliver`
+Contains _**paper_sent**_ and _**paper_received**_.
+Enter `paper_sent` or `paper_received` in `papers_kind` column to identify that row which one is.
 
-This column store papers deliver from law firm. It's need to store the following columns related to the delivered papers.
+```database
+| Column        | Data Type             | Description                                    |
+| :---          | :----                 | :---                                           |
+| id            | INTEGER               | primary key                                    |
+| papers_kind   | VARCHAR(50) NOT NULL  | identify paper sent or received                |
+| sent_date     | DATE                  | sent date of papers                            |
+| subject       | VARCHAR(400) NOT NULL | subject of papers                              |
+| arrival_date  | DATE                  | papers we send and it's arrival date           |
+| received_date | DATE                  | papers from opposite that we received          |
+| deadline_date | DATE                  | if papers we received has something need to do |
+| paper_type_id | INTEGER NOT NULL      | foreign key to papers_type table               |
+| case_id       | INTEGER NOT NULL      | foreign key to cases table                     |
+```
 
-* **id (PK)**
-  * Primary Key.
-
-* **deliver_date**
-  * Store the date the paper was delivered in `DATE` data type.
-
-* **paper_deliver_subject**
-  * Simply save the subject of the paper delivered for a quick and easy understanding of what the purpose of the paper is. Store the data in `VARCHAR` data type, the length with limit is 400.
-
-* **paper_arrival_date**
-  * It's important for law firm to record when the delivered paper was arrival. Store the date in `DATE` data type.
-
-* **paper_type_id (FK)**
-  * This is the foreign key column of this table, associated with the `paper_type` to record the type of paper delivered.Store this data to `INTEGER`.
-
-* **case_id (FK)**
-  * This is the foreign key column of this table, associated with the `case_id` to record which case the paper was delivered. Store this data to `INTEGER`.
-
-#### `paper_received`
-
-This column store papers received from others like courts or opposite party. It's need to store the following columns related to the delivered papers.
-
-* **id (PK)**
-  * Primary Key.
-
-* **received_date**
-  * Store the date the paper received in `DATE` data type.
-
-* **paper_received_subject**
-  * Simply save the subject of the paper received for a quick and easy understanding of what the purpose of the paper is. Store the data in `VARCHAR` data type, the length with limit is 400.
-
-* **deadline_date**
-  * Sometimes the paper received which will mention something attorney have to do before deadline. Therefore, It's very important to record the deadline. Store the date in `DATE` data type.
-
-* **paper_type_id (FK)**
-  * This is the foreign key column of this table, associated with the `paper_type` to record the type of paper received. Store this data to `INTEGER`.
-
-* **case_id (FK)**
-  * This is the foreign key column of this table, associated with the `case_id` to record which case the paper was received. Store this data to `INTEGER`.
-
-#### `section_in_charge`
+#### `section_in_charges`
 
 Section in charge, which means “股別” in Chinese. In Taiwan's legal system, each case will be distributed to specific section in charge, it's important because when attorney want to contact court, he must go through section in charge.
 
-* **id (PK)**
-  * Primary Key.
-
-* **section_in_charge_name**
-  * Store this data to `VARCHAR` data type, the length with limit is 20.
-
-* **clerk_name**
-  * Each section in charge will has a clerk in charge as contact person. Store this data to `VARCHAR` data type, the length with limit is 50.
-
-* **extension_number**
-  * Saving this data will help attorney quickly search for extensions in the future. Store this data to `INTEGER`.
-
-* **court_id (FK)**
-  * Different courts will have the same section in charge name, so here we need to associate the court table. Store this data to `INTEGER`.
+```database
+| Column            | Data Type       | Description                 |
+| :---              | :----           | :---                        |
+| id                | INTEGER         | primary key                 |
+| name              | VARCHAR(20)     | name of section in charge   |
+| clerks_first_name | VARCHAR(50)     | contact person's first name |
+| clerks_last_name  | VARCHAR(50)     | contact person's last name  |
+| extension_number  | VARCHAR(50)     | extension number            |
+| court_id          | INTEGER NOT NULL| foreign key to courts table |
+```
 
 #### `cause_of_action`
 
-Cause of action, which means “案由” in Chinese like “拆屋還地”, “分割共有物”, etc. Cause of action is also an important thing in Taiwan's legal system, it indicates what legal disputes are involved in this case.
+Cause of action, which means “案由” in Chinese likes “拆屋還地”, “分割共有物”, etc. Cause of action is also an important thing in Taiwan's legal system, it indicates what legal disputes are involved in this case.
 
-* **id (PK)**
-  * Primary Key.
-
-* **section_in_charge_name**
-  * Store this data to `VARCHAR` data type, the length with limit is 50.
+```database
+| Column       | Data Type                   | Description     |
+| :---         | :----                       | :---            |
+| id           | INTEGER                     | primary key     |
+| cause        | VARCHAR(50) UNIQUE NOT NULL | likes “拆屋還地” |
+```
 
 #### `court`
 
 As mentioned above, and so on in the `case` mentioned below, build court into a table in order to associate `section_in_charge` and `case`.
 
-* **id (PK)**
-  * Primary Key.
-
-* **court_name**
-  * Store this data to `VARCHAR` data type and some court's name are very long, so the length with limit is 100.
-
-* **court_address**
-  * Store this data to `VARCHAR` data type and because addresses are generally long that the length with limit is 100.
+```database
+| Column       | Data Type                    | Description                    |
+| :---         | :----                        | :---                           |
+| id           | INTEGER                      | primary key                    |
+| name         | VARCHAR(100) UNIQUE NOT NULL | name of court                  |
+| phone_number | VARCHAR(50) NOT NULL         | phone number of court          |
+| addresses_id | INTEGER NOT NULL             | foreign key to addresses table |
+```
 
 #### `case`
 
 Basically, in a law firm, it can be said that it operates by handling cases. Creating a table of case help us to associate with other tables.
 
-* **id (PK)**
-  * Primary Key.
-
-* **category**
-  * Category means “案件類別” in Chinese, category of case may be civil (民事) case, criminal (刑事) case, etc. Store in `VARCHAR` data type, the length with limit is 20.
-
-* **year**
-  * The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan. So here we store this data to `INTEGER`.
-
-* **type**
-  * The type of case, means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc. Each type mention to different essence even procedure of law suit. Here it will store this data to `VARCHAR` data type, the length with limit is 50.
-
-* **number**
-  * Each case will has it's number, it will be stored to `INTEGER`.
-
->As above, each case will associated with section in charge, cause of action, court, client and opposite party, so it's necessary to add foreign keys below:
-
-* **section_in_charge_id (FK)**
-
-* **cause_of_action_id (FK)**
-
-* **court_id (FK)**
-
-* **client_id (FK)**
-
-* **opposite_party_id (FK)**
+```database
+| Column                | Data Type            | Description                                     |
+| :---                  | :----                | :---                                            |
+| id                    | INTEGER              | primary key                                     |
+| category              | VARCHAR(20) NOT NULL | means “案件類別” in Chinese likes “民事” or “刑事” |
+| year                  | INTEGER NOT NULL     | The year of the case, Taiwan's legal system is
+                                                 mainly calculated from the years of the
+                                                 Republic of China. For example, 2022 year is
+                                                 equal to 111 year in Taiwan.                    |
+| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, like 
+                                                 “訴”, “上”, “重訴”, “勞訴” ,etc.                  |
+| number                | INTEGER              | number of cases                                 |
+| section_in_charges_id | INTEGER              | foreign key to section in charges table         |
+| cause_of_actions_id   | INTEGER              | foreign key to cause of actions table           |
+| courts_id             | INTEGER              | foreign key to courts table                     |
+| clients_id            | INTEGER NOT NULL     | foreign key to users table                      |
+| attorneys_id          | INTEGER NOT NULL     | foreign key to users table                      |
+| opposites_id          | INTEGER              | foreign key to opposites table                  |
+| opposites_agent_id    | INTEGER              | foreign key to opposites table                  |
+```
