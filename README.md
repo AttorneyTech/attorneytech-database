@@ -197,6 +197,7 @@ Enter `paper_sent` or `paper_received` in `papers_kind` column to identify that 
 | arrival_date  | DATE                  | papers we send and it's arrival date           |
 | received_date | DATE                  | papers from opposite that we received          |
 | deadline_date | DATE                  | if papers we received has something need to do |
+| court_date    | TIMESTAMP WITHOUT TIME ZONE | next court date and time                 |
 | paper_type_id | INTEGER NOT NULL      | foreign key to papers_type table               |
 | case_id       | INTEGER NOT NULL      | foreign key to cases table                     |
 
