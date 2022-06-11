@@ -243,7 +243,8 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | category              | VARCHAR(20) NOT NULL | means “案件類別” in Chinese likes “民事” or “刑事” |
 | year                  | INTEGER NOT NULL     | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
 | type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, likes “訴”, “上”, “重訴”, “勞訴” ,etc.                                                                                 |
-| number                | INTEGER              | number of cases                                 |
+| number                | VARCHAR(10)          | number of cases                                 |
+| group                 | VARCHAR(10)          | mark the same case in whole lawsuit procedure to one group |
 | section_in_charges_id | INTEGER              | foreign key to section in charges table         |
 | cause_of_actions_id   | INTEGER              | foreign key to cause of actions table           |
 | courts_id             | INTEGER              | foreign key to courts table                     |
