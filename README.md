@@ -149,9 +149,8 @@ At the same time, `docker-compose` will also create a network and put the contai
 Contains _**clients**_ and _**attorneys**_.
 Enter `client` or `attorney` in `role` column to identify that row which one is.
 
-```database
 | Column       | Data Type            | Description                    |
-| :---         | :----                | :---                           |
+| :-----       | :-----               |:---                            |
 | id           | INTEGER              | primary key                    |
 | role         | VARCHAR(50) NOT NULL | identify clients or attorneys  |
 | first_name   | VARCHAR(50) NOT NULL | first name                     |
@@ -159,14 +158,12 @@ Enter `client` or `attorney` in `role` column to identify that row which one is.
 | email        | VARCHAR(50)          | email                          |
 | phone_number | VARCHAR(50)          | phone number                   |
 | addresses_id | INTEGER              | foreign key to addresses table |
-```
 
 #### `opposites`
 
 Contains _**opposite**_ and _**opposite_agent**_.
 Enter `opposite` or `opposite_agent` in `role` column to identify that row which one is.
 
-```database
 | Column       | Data Type            | Description                         |
 | :---         | :----                | :---                                |
 | id           | INTEGER              | primary key                         |
@@ -176,25 +173,21 @@ Enter `opposite` or `opposite_agent` in `role` column to identify that row which
 | email        | VARCHAR(50)          | email                               |
 | phone_number | VARCHAR(50)          | phone number                        |
 | addresses_id | INTEGER              | foreign key to addresses table      |
-```
 
 #### `papers_type`
 
 There are many types of legal case paper. In order to avoid entering the paper type every time you receive or deliver a paper, here build the paper type into a table.
 
-```database
 | Column       | Data Type                   | Description           |
 | :---         | :----                       | :---                  |
 | id           | INTEGER                     | primary key           |
 | papers_type  | VARCHAR(50) UNIQUE NOT NULL | likes “起訴狀”,“答辯狀” |
-```
 
 #### `papers`
 
 Contains _**paper_sent**_ and _**paper_received**_.
 Enter `paper_sent` or `paper_received` in `papers_kind` column to identify that row which one is.
 
-```database
 | Column        | Data Type             | Description                                    |
 | :---          | :----                 | :---                                           |
 | id            | INTEGER               | primary key                                    |
@@ -206,13 +199,11 @@ Enter `paper_sent` or `paper_received` in `papers_kind` column to identify that 
 | deadline_date | DATE                  | if papers we received has something need to do |
 | paper_type_id | INTEGER NOT NULL      | foreign key to papers_type table               |
 | case_id       | INTEGER NOT NULL      | foreign key to cases table                     |
-```
 
 #### `section_in_charges`
 
 Section in charge, which means “股別” in Chinese. In Taiwan's legal system, each case will be distributed to specific section in charge, it's important because when attorney want to contact court, he must go through section in charge.
 
-```database
 | Column            | Data Type       | Description                 |
 | :---              | :----           | :---                        |
 | id                | INTEGER         | primary key                 |
@@ -221,47 +212,37 @@ Section in charge, which means “股別” in Chinese. In Taiwan's legal system
 | clerks_last_name  | VARCHAR(50)     | contact person's last name  |
 | extension_number  | VARCHAR(50)     | extension number            |
 | court_id          | INTEGER NOT NULL| foreign key to courts table |
-```
 
 #### `cause_of_action`
 
 Cause of action, which means “案由” in Chinese likes “拆屋還地”, “分割共有物”, etc. Cause of action is also an important thing in Taiwan's legal system, it indicates what legal disputes are involved in this case.
 
-```database
 | Column       | Data Type                   | Description     |
 | :---         | :----                       | :---            |
 | id           | INTEGER                     | primary key     |
 | cause        | VARCHAR(50) UNIQUE NOT NULL | likes “拆屋還地” |
-```
 
 #### `court`
 
 As mentioned above, and so on in the `case` mentioned below, build court into a table in order to associate `section_in_charge` and `case`.
 
-```database
 | Column       | Data Type                    | Description                    |
 | :---         | :----                        | :---                           |
 | id           | INTEGER                      | primary key                    |
 | name         | VARCHAR(100) UNIQUE NOT NULL | name of court                  |
 | phone_number | VARCHAR(50) NOT NULL         | phone number of court          |
 | addresses_id | INTEGER NOT NULL             | foreign key to addresses table |
-```
 
 #### `case`
 
 Basically, in a law firm, it can be said that it operates by handling cases. Creating a table of case help us to associate with other tables.
 
-```database
 | Column                | Data Type            | Description                                     |
 | :---                  | :----                | :---                                            |
 | id                    | INTEGER              | primary key                                     |
 | category              | VARCHAR(20) NOT NULL | means “案件類別” in Chinese likes “民事” or “刑事” |
-| year                  | INTEGER NOT NULL     | The year of the case, Taiwan's legal system is
-                                                 mainly calculated from the years of the
-                                                 Republic of China. For example, 2022 year is
-                                                 equal to 111 year in Taiwan.                    |
-| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, like 
-                                                 “訴”, “上”, “重訴”, “勞訴” ,etc.                  |
+| year                  | INTEGER NOT NULL     | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
+| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, likes “訴”, “上”, “重訴”, “勞訴” ,etc.                                                                                 |
 | number                | INTEGER              | number of cases                                 |
 | section_in_charges_id | INTEGER              | foreign key to section in charges table         |
 | cause_of_actions_id   | INTEGER              | foreign key to cause of actions table           |
@@ -270,4 +251,26 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | attorneys_id          | INTEGER NOT NULL     | foreign key to users table                      |
 | opposites_id          | INTEGER              | foreign key to opposites table                  |
 | opposites_agent_id    | INTEGER              | foreign key to opposites table                  |
-```
+
+#### `addresses`
+
+Store the addresses data to this table.
+
+| Column       | Data Type                    | Description       |
+| :---         | :----                        | :---              |
+| id           | INTEGER                      | primary key       |
+| zip_code     | VARCHAR(6)                   | zip_code(郵遞區號)  |
+| city         | VARCHAR(10)                  | city(市)          |
+| country      | VARCHAR(10)                  | country(縣)       |
+| township     | VARCHAR(10)                  | township(鄉鎮)    |
+| district     | VARCHAR(10)                  | district(區)      |
+| village      | VARCHAR(10)                  | village(村/里)    |
+| road         | VARCHAR(10)                  | road(路)          |
+| street       | VARCHAR(10)                  | street(街)        |
+| boulevard    | VARCHAR(10)                  | boulevard(大道)    |
+| section      | VARCHAR(10)                  | section(段)       |
+| lane         | VARCHAR(10)                  | lane(巷)          |
+| alley        | VARCHAR(10)                  | alley(弄)         |
+| number       | VARCHAR(10)                  | number(號)        |
+| floor        | VARCHAR(10)                  | floor(樓)         |
+| room         | VARCHAR(10)                  | room(室)          |
