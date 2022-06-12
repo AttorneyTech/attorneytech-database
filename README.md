@@ -147,59 +147,90 @@ At the same time, `docker-compose` will also create a network and put the contai
 #### `users`
 
 Contains _**clients**_ and _**attorneys**_.
-Enter `client` or `attorney` in `role` column to identify that row which one is.
+Store `client` or `agent` in `role` column to identify that row which one is.
 
-| Column       | Data Type            | Description                    |
-| :-----       | :-----               |:---                            |
-| id           | INTEGER              | primary key                    |
-| role         | VARCHAR(50) NOT NULL | identify clients or attorneys  |
-| first_name   | VARCHAR(50) NOT NULL | first name                     |
+| Column       | Data Type            | Description                                                    |
+| :-----       | :-----               |:---                                                            |
+| id           | INTEGER              | primary key                                                    |
+| role         | VARCHAR(50) NOT NULL | identify clients or agents                                     |
+| username     | VARCHAR(20)          | web interface username of clients or agents                    |
+| password     | VARCHAR(64)          | web interface password of clients or agents. Hashed with SHA256|
+| first_name   | VARCHAR(50) NOT NULL | first name                                                     |
+| middle_name  | VARCHAR(50)          | middle name                                                    |
 | last_name    | VARCHAR(50) NOT NULL | last name                      |
 | email        | VARCHAR(50)          | email                          |
 | phone_number | VARCHAR(50)          | phone number                   |
-| addresses_id | INTEGER              | foreign key to addresses table |
+| road         | VARCHAR(100)         | road name and number, floor, etc |
+| district     | VARCHAR(20)          | district name                  |
+| city         | VARCHAR(20)          | city name                      |
+| zip_code     | VARCHAR(10)          | zip code                       |
 
 #### `opposites`
 
-Contains _**opposite**_ and _**opposite_agent**_.
-Enter `opposite` or `opposite_agent` in `role` column to identify that row which one is.
+In administrative event of criminal event, the opposite is not a natural person(自然人). \
+In that case, the agent is not important. \
+Another reason to separate the opposites into a table is that for the law firm, \
+it is necessary to pay attention to the conflict of interest(利益衝突), the opposite is possible to become \
+a client in the future. \
+Therefore, it is necessary to check this before accepting a case. \
+In addition, because it's usually don't know the email and phone number of the opposite, \
+it's only need to know the papers sending address, so the columns for email and phone number \
+would not added in this table.
 
 | Column       | Data Type            | Description                         |
 | :---         | :----                | :---                                |
 | id           | INTEGER              | primary key                         |
-| role         | VARCHAR(50) NOT NULL | identify opposite or opposite_agent |
+| name         | VARCHAR(100)         | name of administration(行政機關) or prosecutor(檢察官)|
 | first_name   | VARCHAR(50) NOT NULL | first name                          |
+| middle_name  | VARCHAR(50)          | middle name                         |
 | last_name    | VARCHAR(50) NOT NULL | last name                           |
-| email        | VARCHAR(50)          | email                               |
-| phone_number | VARCHAR(50)          | phone number                        |
-| addresses_id | INTEGER              | foreign key to addresses table      |
+| road         | VARCHAR(100)         | road name and number, floor, etc |
+| district     | VARCHAR(20)          | district name                  |
+| city         | VARCHAR(20)          | city name                      |
+| zip_code     | VARCHAR(10)          | zip code                       |
 
-#### `papers_type`
+#### `opposite_agents`
+
+| Column       | Data Type            | Description                         |
+| :---         | :----                | :---                                |
+| id           | INTEGER              | primary key                         |
+| first_name   | VARCHAR(50) NOT NULL | first name                          |
+| middle_name  | VARCHAR(50)          | middle name                         |
+| last_name    | VARCHAR(50) NOT NULL | last name                           |
+| email        | VARCHAR(50)          | email                            |
+| phone_number | VARCHAR(50)          | phone number                     |
+| road         | VARCHAR(100)         | road name and number, floor, etc |
+| district     | VARCHAR(20)          | district name                  |
+| city         | VARCHAR(20)          | city name                      |
+| zip_code     | VARCHAR(10)          | zip code                       |
+
+#### `paper_types`
 
 There are many types of legal case paper. In order to avoid entering the paper type every time you receive or deliver a paper, here build the paper type into a table.
 
 | Column       | Data Type                   | Description           |
 | :---         | :----                       | :---                  |
 | id           | INTEGER                     | primary key           |
-| papers_type  | VARCHAR(50) UNIQUE NOT NULL | likes “起訴狀”,“答辯狀” |
+| type  | VARCHAR(50) UNIQUE NOT NULL | like “起訴狀”, “答辯狀” |
 
 #### `papers`
 
 Contains _**paper_sent**_ and _**paper_received**_.
-Enter `paper_sent` or `paper_received` in `papers_kind` column to identify that row which one is.
+Enter `paper_sent` or `paper_received` in `category` column to identify that row which one is.
 
-| Column        | Data Type             | Description                                    |
-| :---          | :----                 | :---                                           |
-| id            | INTEGER               | primary key                                    |
-| papers_kind   | VARCHAR(50) NOT NULL  | identify paper sent or received                |
-| sent_date     | DATE                  | sent date of papers                            |
-| subject       | VARCHAR(400) NOT NULL | subject of papers                              |
-| arrival_date  | DATE                  | papers we send and it's arrival date           |
-| received_date | DATE                  | papers from opposite that we received          |
-| deadline_date | DATE                  | if papers we received has something need to do |
-| court_date    | TIMESTAMP WITHOUT TIME ZONE | next court date and time                 |
-| paper_type_id | INTEGER NOT NULL      | foreign key to papers_type table               |
-| case_id       | INTEGER NOT NULL      | foreign key to cases table                     |
+| Column         | Data Type             | Description                                    |
+| :---           | :----                 | :---                                           |
+| id             | INTEGER               | primary key                                    |
+| category       | VARCHAR(50) NOT NULL  | identify paper sent or received                |
+| title          | VARCHAR(100) NOT NULL | the paper's title like “民事答辯(二)狀”, “刑事辯護(三狀)” |
+| subject        | VARCHAR(400) NOT NULL | subject of papers                              |
+| sent_date      | DATE                  | sent date of papers                            |
+| arrival_date   | DATE                  | papers we send and it's arrival date           |
+| received_date  | DATE                  | papers from opposite that we received          |
+| deadline_date  | DATE                  | if papers we received has something need to do |
+| court_date     | TIMESTAMP WITHOUT TIME ZONE | next court date and time                 |
+| paper_types_id | INTEGER NOT NULL            | foreign key to papers_type table               |
+| cases_id       | INTEGER NOT NULL            | foreign key to cases table                     |
 
 #### `section_in_charges`
 
@@ -210,20 +241,23 @@ Section in charge, which means “股別” in Chinese. In Taiwan's legal system
 | id                | INTEGER         | primary key                 |
 | name              | VARCHAR(20)     | name of section in charge   |
 | clerks_first_name | VARCHAR(50)     | contact person's first name |
+| clerks_middle_name | VARCHAR(50)     | contact person's middle name |
 | clerks_last_name  | VARCHAR(50)     | contact person's last name  |
 | extension_number  | VARCHAR(50)     | extension number            |
 | court_id          | INTEGER NOT NULL| foreign key to courts table |
 
-#### `cause_of_action`
+#### `cause_of_actions`
 
-Cause of action, which means “案由” in Chinese likes “拆屋還地”, “分割共有物”, etc. Cause of action is also an important thing in Taiwan's legal system, it indicates what legal disputes are involved in this case.
+Cause of action, which means “案由” in Chinese likes “拆屋還地”, “分割共有物”, etc. \
+Cause of action is also an important thing in Taiwan's legal system, \
+it indicates what legal disputes are involved in this case.
 
 | Column       | Data Type                   | Description     |
 | :---         | :----                       | :---            |
 | id           | INTEGER                     | primary key     |
-| cause        | VARCHAR(50) UNIQUE NOT NULL | likes “拆屋還地” |
+| cause        | VARCHAR(50) UNIQUE NOT NULL | like “拆屋還地” |
 
-#### `court`
+#### `courts`
 
 As mentioned above, and so on in the `case` mentioned below, build court into a table in order to associate `section_in_charge` and `case`.
 
@@ -232,9 +266,25 @@ As mentioned above, and so on in the `case` mentioned below, build court into a 
 | id           | INTEGER                      | primary key                    |
 | name         | VARCHAR(100) UNIQUE NOT NULL | name of court                  |
 | phone_number | VARCHAR(50) NOT NULL         | phone number of court          |
-| addresses_id | INTEGER NOT NULL             | foreign key to addresses table |
+| road         | VARCHAR(100)         | road name and number, floor, etc |
+| district     | VARCHAR(20)          | district name                  |
+| city         | VARCHAR(20)          | city name                      |
+| zip_code     | VARCHAR(10)          | zip code                       |
 
-#### `case`
+#### `events`
+
+An event is a collection of many cases, an event may walk through many instance levels of court(審級), \
+and in each instance level of court will have different case number. \
+So it's necessary to separate the events into a table.
+
+| Column       | Data Type                   | Description     |
+| :---         | :----                       | :---            |
+| id           | INTEGER                     | primary key     |
+| name         | VARCHAR(100) UNIQUE NOT NULL | event name. For example, “甲與乙台北市東興路房地拆屋還地事件”, “丙被訴違反證券交易法事件”, “丁與台北市政府確認文山區土地公用地役關係存在事件” |
+| client_id    | INTEGER NOT NULL            | foreign key to users table. |
+| opposites_id | INTEGER NOT NULL            | foreign key to opposites table. |
+
+#### `cases`
 
 Basically, in a law firm, it can be said that it operates by handling cases. Creating a table of case help us to associate with other tables.
 
@@ -243,36 +293,13 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | id                    | INTEGER              | primary key                                     |
 | category              | VARCHAR(20) NOT NULL | means “案件類別” in Chinese likes “民事” or “刑事” |
 | year                  | INTEGER NOT NULL     | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
-| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, likes “訴”, “上”, “重訴”, “勞訴” ,etc.                                                                                 |
+| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, likes “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                 |
 | number                | VARCHAR(10)          | number of cases                                 |
-| group                 | VARCHAR(10)          | mark the same case in whole lawsuit procedure to one group |
+| events_id             |INTEGER NOT NULL      | foreign key, mark the same case in whole lawsuit procedure to one event |
 | section_in_charges_id | INTEGER              | foreign key to section in charges table         |
 | cause_of_actions_id   | INTEGER              | foreign key to cause of actions table           |
 | courts_id             | INTEGER              | foreign key to courts table                     |
-| clients_id            | INTEGER NOT NULL     | foreign key to users table                      |
-| attorneys_id          | INTEGER NOT NULL     | foreign key to users table                      |
+| client_id            | INTEGER NOT NULL     | foreign key to users table                      |
+| agent_id             | INTEGER NOT NULL     | foreign key to users table                      |
 | opposites_id          | INTEGER              | foreign key to opposites table                  |
-| opposites_agent_id    | INTEGER              | foreign key to opposites table                  |
-
-#### `addresses`
-
-Store the addresses data to this table.
-
-| Column       | Data Type                    | Description       |
-| :---         | :----                        | :---              |
-| id           | INTEGER                      | primary key       |
-| zip_code     | VARCHAR(6)                   | zip_code(郵遞區號)  |
-| city         | VARCHAR(10)                  | city(市)          |
-| country      | VARCHAR(10)                  | country(縣)       |
-| township     | VARCHAR(10)                  | township(鄉鎮)    |
-| district     | VARCHAR(10)                  | district(區)      |
-| village      | VARCHAR(10)                  | village(村/里)    |
-| road         | VARCHAR(10)                  | road(路)          |
-| street       | VARCHAR(10)                  | street(街)        |
-| boulevard    | VARCHAR(10)                  | boulevard(大道)    |
-| section      | VARCHAR(10)                  | section(段)       |
-| lane         | VARCHAR(10)                  | lane(巷)          |
-| alley        | VARCHAR(10)                  | alley(弄)         |
-| number       | VARCHAR(10)                  | number(號)        |
-| floor        | VARCHAR(10)                  | floor(樓)         |
-| room         | VARCHAR(10)                  | room(室)          |
+| opposites_agent_id    | INTEGER              | foreign key to opposite_agent table                  |
