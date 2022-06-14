@@ -146,7 +146,7 @@ Store `client` or `agent` in `role` column to identify that row which one is.
 | middle_name  | VARCHAR(50)          | middle name                                                    |
 | last_name    | VARCHAR(50) NOT NULL | last name                                                      |
 | email        | VARCHAR(50)          | email                                                          |
-| phone_number | VARCHAR(50)          | phone number                                                   |
+| phone | VARCHAR(50)          | phone number                                                   |
 | street_name  | VARCHAR(100)         | street name and number, floor, etc                             |
 | district     | VARCHAR(20)          | district name                                                  |
 | city         | VARCHAR(20)          | city name                                                      |
@@ -154,10 +154,10 @@ Store `client` or `agent` in `role` column to identify that row which one is.
 
 #### `opposite_clients`
 
-In administrative event of criminal event, the opposite is not a natural person (自然人). \
+In administrative event of criminal event, the opposite is not a natural person（自然人）. \
 In that case, the agent is not important. \
 Another reason to separate the opposites into a table is that for the law firm, \
-it is necessary to pay attention to the conflict of interest (利益衝突), the opposite is possible to become \
+it is necessary to pay attention to the conflict of interest（利益衝突）, the opposite is possible to become \
 a client in the future. \
 Therefore, it is necessary to check this before accepting a case. \
 In addition, because it's usually don't know the email and phone number of the opposite, \
@@ -167,7 +167,7 @@ would not added in this table.
 | Column       | Data Type            | Description                                           |
 | :---         | :----                | :---                                                  |
 | id           | INTEGER              | primary key                         |
-| name         | VARCHAR(100)         | name of administration (行政機關) or prosecutor (檢察官)|
+| name         | VARCHAR(100)         | name of administration（行政機關） or prosecutor（檢察官）|
 | first_name   | VARCHAR(50) NOT NULL | first name                                            |
 | middle_name  | VARCHAR(50)          | middle name                                           |
 | last_name    | VARCHAR(50) NOT NULL | last name                                             |
@@ -185,7 +185,7 @@ would not added in this table.
 | middle_name  | VARCHAR(50)          | middle name                         |
 | last_name    | VARCHAR(50) NOT NULL | last name                           |
 | email        | VARCHAR(50)          | email                               |
-| phone_number | VARCHAR(50)          | phone number                        |
+| phone | VARCHAR(50)          | phone number                        |
 | street_name  | VARCHAR(100)         | street name and number, floor, etc  |
 | district     | VARCHAR(20)          | district name                       |
 | city         | VARCHAR(20)          | city name                           |
@@ -200,13 +200,13 @@ Enter `paper_sent` or `paper_received` in `category` column to identify that row
 | :---          | :----                       | :---                                                  |
 | id            | INTEGER                     | primary key                                           |
 | category      | VARCHAR(50)  NOT NULL       | identify paper sent or received                       |
-| title         | VARCHAR(100) NOT NULL       | the paper's title like “民事答辯(二)狀”, “刑事辯護(三狀)” |
+| title         | VARCHAR(100) NOT NULL       | the paper's title like “民事答辯狀”, “刑事辯護狀”        |
 | subject       | VARCHAR(400) NOT NULL       | subject of papers                                     |
 | sent_date     | DATE                        | sent date of papers                                   |
 | arrival_date  | DATE                        | papers we send and it's arrival date                  |
 | received_date | DATE                        | papers from opposite that we received                 |
 | deadline_date | DATE                        | if papers we received has something need to do        |
-| court_date    | TIMESTAMP WITHOUT TIME ZONE | next court date and time                              |
+| court_date    | TIMESTAMP| next court date and time                              |
 | paper_type    | VARCHAR(50) NOT NULL        | like “起訴狀”, “答辯狀” table                           |
 | case_id       | INTEGER NOT NULL            | foreign key to cases table                            |
 
@@ -219,7 +219,6 @@ Section in charge, which means “股別” in Chinese. In Taiwan's legal system
 | id                | INTEGER          | primary key                  |
 | name              | VARCHAR(20)      | name of section in charge    |
 | clerk_first_name  | VARCHAR(50)      | contact person's first name  |
-| clerk_middle_name | VARCHAR(50)      | contact person's middle name |
 | clerk_last_name   | VARCHAR(50)      | contact person's last name   |
 | extension_number  | VARCHAR(50)      | extension number             |
 | court_id          | INTEGER NOT NULL | foreign key to courts table  |
@@ -232,7 +231,7 @@ As mentioned above, and so on in the `case` mentioned below, build court into a 
 | :---         | :----                        | :---                               |
 | id           | INTEGER                      | primary key                        |
 | name         | VARCHAR(100) UNIQUE NOT NULL | name of court                      |
-| phone_number | VARCHAR(50) NOT NULL         | phone number of court              |
+| phone | VARCHAR(50) NOT NULL         | phone number of court              |
 | street_name  | VARCHAR(100)                 | street name and number, floor, etc |
 | district     | VARCHAR(20)                  | district name                      |
 | city         | VARCHAR(20)                  | city name                          |
@@ -240,7 +239,7 @@ As mentioned above, and so on in the `case` mentioned below, build court into a 
 
 #### `events`
 
-An event is a collection of many cases, an event may walk through many instance levels of court(審級), \
+An event is a collection of many cases, an event may walk through many instance levels of court（審級）, \
 and in each instance level of court will have different case number. \
 So it's necessary to separate the events into a table.
 
@@ -265,7 +264,7 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | cause_of_action       | VARCHAR(100)              | which means “案由” in Chinese likes “拆屋還地”          |
 | event_id              |INTEGER NOT NULL      | foreign key, mark the same case in whole lawsuit procedure to one event  |
 | section_in_charges_id | INTEGER              | foreign key to section in charges table |
-| courts_id             | INTEGER              | foreign key to courts table             |
+| court_id             | INTEGER              | foreign key to courts table             |
 | client_id             | INTEGER NOT NULL     | foreign key to users table              |
 | agent_id              | INTEGER NOT NULL     | foreign key to users table              |
 | opposite_client_id    | INTEGER              | foreign key to opposite_clients table   |
