@@ -154,7 +154,7 @@ Store `client` or `agent` in `role` column to identify that row which one is.
 
 #### `opposite_clients`
 
-In administrative event of criminal event, the opposite is not a natural person（自然人）. \
+In administrative event or criminal event, the opposite is not a natural person（自然人）. \
 In that case, the agent is not important. \
 Another reason to separate the opposites into a table is that for the law firm, \
 it is necessary to pay attention to the conflict of interest（利益衝突）, the opposite is possible to become \
