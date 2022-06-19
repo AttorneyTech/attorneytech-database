@@ -204,11 +204,22 @@ Enter `paper_sent` or `paper_received` in `category` column to identify that row
 | subject       | VARCHAR(400) NOT NULL       | subject of papers                                     |
 | sent_date     | DATE                        | sent date of papers                                   |
 | arrival_date  | DATE                        | papers we send and it's arrival date                  |
-| received_date | DATE                        | papers from opposite that we received                 |
+| received_date | DATE                        | papers from opposite that when we received                 |
 | deadline_date | DATE                        | if papers we received has something need to do        |
 | court_date    | TIMESTAMP| next court date and time                              |
-| paper_type    | VARCHAR(50) NOT NULL        | like “起訴狀”, “答辯狀” table                           |
+| paper_type    | VARCHAR(50) NOT NULL        | like “起訴狀”, “答辯狀”                           |
 | case_id       | INTEGER NOT NULL            | foreign key to cases table                            |
+| paper_file_id | INTEGER NOT NULL            | foreign key to paper_file table                     |
+
+#### `paper_files`
+
+Paper's files
+
+| Column | Data Type                    | Description                           |
+| :---   | :----                        | :---                                  |
+| id     | INTEGER                      | primary key                           |
+| name   | VARCHAR(100) UNIQUE NOT NULL | paper file name                       |
+| file   | bytea                        | paper file, store in bytea data type. |
 
 #### `section_in_charges`
 
@@ -257,11 +268,11 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | Column                | Data Type            | Description                                     |
 | :---                  | :----                | :---                                            |
 | id                    | INTEGER              | primary key                                     |
-| category              | VARCHAR(20) NOT NULL | means “案件類別” in Chinese likes “民事” or “刑事” |
+| category              | VARCHAR(20) NOT NULL | means “案件類別” in Chinese like “民事” or “刑事” |
 | year                  | VARCHAR(20)      | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
-| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, likes “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
+| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
 | number                | VARCHAR(10)          | number of cases                                 |
-| cause_of_action       | VARCHAR(100)              | which means “案由” in Chinese likes “拆屋還地”          |
+| cause_of_action       | VARCHAR(100)              | which means “案由” in Chinese like “拆屋還地”          |
 | event_id              |INTEGER NOT NULL      | foreign key, mark the same case in whole lawsuit procedure to one event  |
 | section_in_charges_id | INTEGER              | foreign key to section in charges table |
 | court_id             | INTEGER              | foreign key to courts table             |

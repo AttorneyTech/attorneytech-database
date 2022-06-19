@@ -1,5 +1,6 @@
+/* Create table of users */
 CREATE TABLE users (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   role VARCHAR(50) NOT NULL,
   username VARCHAR(20),
   password VARCHAR(64),
@@ -14,12 +15,54 @@ CREATE TABLE users (
   zip_code VARCHAR(10)
 );
 
+/* Comment of users table */
 COMMENT ON TABLE users IS 
-'Contains clients and agents. Store client or agent in role column 
-to identify that row which one is.';
+'Contains information of clients and agents in this table.';
 
+/* Comments of users table's columns */
+COMMENT ON COLUMN users.id IS
+'Primary key of this table.';
+
+COMMENT ON COLUMN users.role IS
+'Store client or agent in role column to identify that row which one is.';
+
+COMMENT ON COLUMN users.username IS
+'Web interface username of client or agent.';
+
+COMMENT ON COLUMN users.password IS
+'Web interface password of client or agent. Hashed with SHA256.';
+
+COMMENT ON COLUMN users.first_name IS
+'First name of client or agent.';
+
+COMMENT ON COLUMN users.middle_name IS
+'Middle name of client or agent.';
+
+COMMENT ON COLUMN users.last_name IS
+'Last name of client or agent.';
+
+COMMENT ON COLUMN users.email IS
+'Email of client or agent.';
+
+COMMENT ON COLUMN users.phone IS
+'Phone number of client or agent.';
+
+COMMENT ON COLUMN users.street_name IS
+'The part of the client''s or agent''s address below the street name.';
+
+COMMENT ON COLUMN users.district IS
+'The district of client''s or agent''s address.';
+
+COMMENT ON COLUMN users.city IS
+'The city of client''s or agent''s address.';
+
+COMMENT ON COLUMN users.zip_code IS
+'The zip code of client''s or agent''s address.';
+
+
+/* Create table of opposite_clients */
 CREATE TABLE opposite_clients (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   name VARCHAR(100),
   first_name VARCHAR (50),
   middle_name VARCHAR(50),
@@ -30,14 +73,43 @@ CREATE TABLE opposite_clients (
   zip_code VARCHAR(10)
 );
 
+/* Comment of opposite_clients table*/
 COMMENT ON TABLE opposite_clients IS 
 'In administrative event or criminal event, the opposite client is 
 administration or prosecutor. In civil cases, the opposite client is natrual person.';
 
+/* Comments of opposite_clients table's columns */
+COMMENT ON COLUMN opposite_clients.id IS
+'Primary key of this table.';
+
+COMMENT ON COLUMN opposite_clients.name IS
+'Name of administration or prosecutor.';
+
+COMMENT ON COLUMN opposite_clients.first_name IS
+'First name of opposite client.';
+
+COMMENT ON COLUMN opposite_clients.middle_name IS
+'Middle name of opposite client.';
+
+COMMENT ON COLUMN opposite_clients.last_name IS
+'Last name of opposite client.';
+
+COMMENT ON COLUMN opposite_clients.street_name IS
+'The part of the opposite client''s address below the street name.';
+
+COMMENT ON COLUMN opposite_clients.district IS
+'The district of opposite client''s address.';
+
+COMMENT ON COLUMN opposite_clients.city IS
+'The city of opposite client''s address.';
+
+COMMENT ON COLUMN opposite_clients.zip_code IS
+'The zip code of opposite client''s address.';
 
 
+/* Create table of opposite_agents */
 CREATE TABLE opposite_agents (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   first_name VARCHAR (50) NOT NULL,
   middle_name VARCHAR(50),
   last_name VARCHAR(50) NOT NULL,
@@ -49,12 +121,45 @@ CREATE TABLE opposite_agents (
   zip_code VARCHAR(10)
 );
 
+/* Comment of opposite_agents table */
 COMMENT ON TABLE opposite_agents IS 
 'The agents of opposites.';
 
+/* Comments of opposite_agents table's columns */
+COMMENT ON COLUMN opposite_agents.id IS
+'Primary key of this table.';
 
+COMMENT ON COLUMN opposite_agents.first_name IS
+'First name of opposite agent.';
+
+COMMENT ON COLUMN opposite_agents.middle_name IS
+'Middle name of opposite agent.';
+
+COMMENT ON COLUMN opposite_agents.last_name IS
+'Last name of opposite agent.';
+
+COMMENT ON COLUMN opposite_agents.email IS
+'Email of opposite agent.';
+
+COMMENT ON COLUMN opposite_agents.phone IS
+'Phone number of opposite agent.';
+
+COMMENT ON COLUMN opposite_agents.street_name IS
+'The part of the opposite agent''s address below the street name.';
+
+COMMENT ON COLUMN opposite_agents.district IS
+'The district of opposite agent''s address.';
+
+COMMENT ON COLUMN opposite_agents.city IS
+'The city of opposite agents''s address.';
+
+COMMENT ON COLUMN opposite_agents.zip_code IS
+'The zip code of opposite agents''s address.';
+
+
+/* Create table of courts */
 CREATE TABLE courts (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   name VARCHAR(100) UNIQUE NOT NULL,
   phone	VARCHAR(50) NOT NULL,
   street_name VARCHAR(100),
@@ -63,11 +168,36 @@ CREATE TABLE courts (
   zip_code VARCHAR(10)
 );
 
+/* Comment of courts table */
 COMMENT ON TABLE courts IS 
 'The information of courts, include prosecutors office';
 
+/* Comments of courts table's columns */
+COMMENT ON COLUMN courts.id IS
+'Primary key of this table.';
+
+COMMENT ON COLUMN courts.name IS
+'Name of court.';
+
+COMMENT ON COLUMN courts.phone IS
+'Phone number of court.';
+
+COMMENT ON COLUMN courts.street_name IS
+'The part of the court''s address below the street name.';
+
+COMMENT ON COLUMN courts.district IS
+'The district of court''s address.';
+
+COMMENT ON COLUMN courts.city IS
+'The city of court''s address.';
+
+COMMENT ON COLUMN courts.zip_code IS
+'The zip code of court''s address.';
+
+
+/* Create table of section_in_charges */
 CREATE TABLE section_in_charges (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   name VARCHAR(20),
   clerk_first_name VARCHAR(50),
   clerk_last_name VARCHAR(50),
@@ -75,25 +205,62 @@ CREATE TABLE section_in_charges (
   court_id INTEGER REFERENCES courts(id)
 );
 
+/* Comment of section_in_charges table */
 COMMENT ON TABLE section_in_charges IS 
 'In Taiwan legal system, each case will be distributed to specific section in charge, 
 it is important because when attorney want to contact court, 
 he must go through section in charge.';
 
+/* Comments of section_in_charges table's columns */
+COMMENT ON COLUMN section_in_charges.id IS
+'Primary key of this table.';
+
+COMMENT ON COLUMN section_in_charges.name IS
+'Name of section in charge.';
+
+COMMENT ON COLUMN section_in_charges.clerk_first_name IS
+'First name of contact person.';
+
+COMMENT ON COLUMN section_in_charges.clerk_last_name IS
+'Last name of contact person.';
+
+COMMENT ON COLUMN section_in_charges.extension_number IS
+'Phone extension number of section in charge.';
+
+COMMENT ON COLUMN section_in_charges.court_id IS
+'Foreign key to courts table, identify which court the section in charge is belong to.';
+
+
+/* Create table of events */
 CREATE TABLE events (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   name VARCHAR(100) UNIQUE NOT NULL,
   client_id INTEGER REFERENCES users(id) NOT NULL,
   opposite_client_id INTEGER REFERENCES opposite_clients(id) NOT NULL
 );
 
+/* Comment of events table */
 COMMENT ON TABLE events IS 
 'An event is a collection of many cases, an event may walk through many instance
 levels of court and in each instance level of court will have different case number.';
 
+/* Comments of events table's columns */
+COMMENT ON COLUMN events.id IS
+'Primary key of this table.';
 
+COMMENT ON COLUMN events.name IS
+'The subject of event between client and opposite client.';
+
+COMMENT ON COLUMN events.client_id IS
+'Foreign key to users table, to identify which client was involved in this event.';
+
+COMMENT ON COLUMN events.opposite_client_id IS
+'Foreign key to opposite_client table, to identify which opposite client was involved in this event.';
+
+
+/* Create table of cases */
 CREATE TABLE cases (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   category VARCHAR(20) NOT NULL,
   year VARCHAR(20),
   type VARCHAR(50),
@@ -108,12 +275,78 @@ CREATE TABLE cases (
   opposite_agent_id INTEGER REFERENCES opposite_agents(id)
 );
 
+/* Comment of cases table */
 COMMENT ON TABLE cases IS 
 'Creating a table of cases help us to associate with other tables.';
 
+/* Comments of cases table's columns */
+COMMENT ON COLUMN cases.id IS
+'Primary key of this table.';
 
+COMMENT ON COLUMN cases.category IS
+'Category of cases. Means “案件類別” in Chinese like “民事” or “刑事”.';
+
+COMMENT ON COLUMN cases.year IS
+'The year of the case, In Taiwan legal system is mainly calculated
+from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.
+Here use the years of the Republic of China';
+
+COMMENT ON COLUMN cases.type IS
+'Means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”.';
+
+COMMENT ON COLUMN cases.number IS
+'Number of cases';
+
+COMMENT ON COLUMN cases.cause_of_action IS
+'Which means “案由” in Chinese like “拆屋還地”.';
+
+COMMENT ON COLUMN cases.event_id IS
+'Foreign key to events table, mark the same case in whole lawsuit procedure to one event.';
+
+COMMENT ON COLUMN cases.section_in_charge_id IS
+'Foreign key to section_in_charges table.';
+
+COMMENT ON COLUMN cases.court_id IS
+'Foreign key to courts table.';
+
+COMMENT ON COLUMN cases.client_id IS
+'Foreign key to users table, to identify which client was involved in this case.';
+
+COMMENT ON COLUMN cases.agent_id IS
+'Foreign key to users table, to identify which agent in charge of this case.';
+
+COMMENT ON COLUMN cases.opposite_client_id IS
+'Foreign key to opposite_clients table, to identify which opposite client was involved in this case.';
+
+COMMENT ON COLUMN cases.opposite_agent_id IS
+'Foreign key to opposite_agents table, to identify which opposite''s agent in charge of this case.';
+
+
+/* Create table of paper_files */
+CREATE TABLE paper_files (
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
+  name VARCHAR(100) UNIQUE NOT NULL,
+  file bytea
+);
+
+/* Comment of paper_files table */
+COMMENT ON TABLE paper_files IS 
+'Store paper files in this table.';
+
+/* Comments of paper_files table's columns */
+COMMENT ON COLUMN paper_files.id IS
+'Primary key of this table.';
+
+COMMENT ON COLUMN paper_files.name IS
+'File name of paper.';
+
+COMMENT ON COLUMN paper_files.file IS
+'Paper file, store in bytea data type.';
+
+
+/* Create table of papers */
 CREATE TABLE papers (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 2 INCREMENT BY 3) PRIMARY KEY,
   category VARCHAR (50) NOT NULL,
   title VARCHAR (100) NOT NULL,
   subject VARCHAR (400) NOT NULL,
@@ -123,9 +356,47 @@ CREATE TABLE papers (
   deadline_date DATE,
   court_date TIMESTAMP,
   paper_type VARCHAR (50) NOT NULL,
-  case_id INTEGER REFERENCES cases(id) NOT NULL
+  case_id INTEGER REFERENCES cases(id) NOT NULL,
+  paper_files_id INTEGER REFERENCES paper_files(id)
 );
 
+/* Comment of papers table */
 COMMENT ON TABLE papers IS 
-'Contains paper_sent and paper_received. Enter paper_sent or paper_received in 
-category column to identify that row which one is.';
+'Store all the papers that law firm deal with, contains paper_sent and paper_received.';
+
+/* Comments of papers table's columns */
+COMMENT ON COLUMN papers.id IS
+'Primary key of this table.';
+
+COMMENT ON COLUMN papers.category IS
+'Enter paper_sent or paper_received in this column to identify that row which one is.';
+
+COMMENT ON COLUMN papers.title IS
+'The title of paper like “民事答辯狀”, “刑事辯護狀”.';
+
+COMMENT ON COLUMN papers.subject IS
+'In order to quick understand the subject of the paper, store this value in this column.';
+
+COMMENT ON COLUMN papers.sent_date IS
+'Sent date of papers.';
+
+COMMENT ON COLUMN papers.arrival_date IS
+'Paper we send and the arrival date. Mainly means when the court has received.';
+
+COMMENT ON COLUMN papers.received_date IS
+'Paper from opposite that when we received.';
+
+COMMENT ON COLUMN papers.deadline_date IS
+'If paper we received has something need to do, just store the deadline date in this column.';
+
+COMMENT ON COLUMN papers.court_date IS
+'Next court date and time.';
+
+COMMENT ON COLUMN papers.paper_type IS
+'Like “起訴狀”, “答辯狀” in Chinese.';
+
+COMMENT ON COLUMN papers.case_id IS
+'Foreign key to cases table, to identify which case the paper is belong to.';
+
+COMMENT ON COLUMN papers.paper_files_id IS
+'Foreign key to paper_files table, to indicate the file of paper.';
