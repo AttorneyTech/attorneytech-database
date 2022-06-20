@@ -1,4 +1,6 @@
 /* Create table of users */
+DROP TABLE IF EXISTS users CASCADE;
+
 CREATE TABLE users (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 103 INCREMENT BY 13) PRIMARY KEY,
@@ -62,6 +64,8 @@ COMMENT ON COLUMN users.zip_code IS
 
 
 /* Create table of opposite_clients */
+DROP TABLE IF EXISTS opposite_clients CASCADE;
+
 CREATE TABLE opposite_clients (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 273 INCREMENT BY 31) PRIMARY KEY,
@@ -110,6 +114,8 @@ COMMENT ON COLUMN opposite_clients.zip_code IS
 
 
 /* Create table of opposite_agents */
+DROP TABLE IF EXISTS opposite_agents CASCADE;
+
 CREATE TABLE opposite_agents (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 319 INCREMENT BY 18) PRIMARY KEY,
@@ -161,6 +167,8 @@ COMMENT ON COLUMN opposite_agents.zip_code IS
 
 
 /* Create table of courts */
+DROP TABLE IF EXISTS courts CASCADE;
+
 CREATE TABLE courts (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 470 INCREMENT BY 31) PRIMARY KEY,
@@ -200,6 +208,8 @@ COMMENT ON COLUMN courts.zip_code IS
 
 
 /* Create table of section_in_charges */
+DROP TABLE IF EXISTS section_in_charges CASCADE;
+
 CREATE TABLE section_in_charges (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 653 INCREMENT BY 21) PRIMARY KEY,
@@ -241,6 +251,8 @@ COMMENT ON COLUMN section_in_charges.court_id IS
 
 
 /* Create table of events */
+DROP TABLE IF EXISTS events CASCADE;
+
 CREATE TABLE events (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 1013 INCREMENT BY 47) PRIMARY KEY,
@@ -272,6 +284,8 @@ was involved in this event.';
 
 
 /* Create table of cases */
+DROP TABLE IF EXISTS cases CASCADE;
+
 CREATE TABLE cases (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 973 INCREMENT BY 29) PRIMARY KEY,
@@ -340,6 +354,8 @@ COMMENT ON COLUMN cases.opposite_agent_id IS
 
 
 /* Create table of paper_files */
+DROP TABLE IF EXISTS paper_files CASCADE;
+
 CREATE TABLE paper_files (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 3132 INCREMENT BY 47) PRIMARY KEY,
@@ -363,6 +379,8 @@ COMMENT ON COLUMN paper_files.file IS
 
 
 /* Create table of papers */
+DROP TABLE IF EXISTS papers CASCADE;
+
 CREATE TABLE papers (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 4730 INCREMENT BY 47) PRIMARY KEY,
