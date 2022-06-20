@@ -143,7 +143,7 @@ Store `client` or `agent` in `role` column to identify that row which one is.
 | id           | INTEGER              | An unique ID of user                                           |
 | role         | VARCHAR(50) NOT NULL | Identify clients or agents                                     |
 | username     | VARCHAR(20)          | Username of user                                               |
-| password     | VARCHAR(64)          | Password of user, hashed with SHA256                           |
+| password     | VARCHAR(64)          | Password of user                    |
 | first_name   | VARCHAR(50) NOT NULL | First name of user                                             |
 | middle_name  | VARCHAR(50)          | Middle name of user                                            |
 | last_name    | VARCHAR(50) NOT NULL | Last name of user                                              |

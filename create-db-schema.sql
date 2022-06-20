@@ -31,7 +31,7 @@ COMMENT ON COLUMN users.username IS
 'Username of user.';
 
 COMMENT ON COLUMN users.password IS
-'Password of user. Hashed with SHA256.';
+'Password of user.';
 
 COMMENT ON COLUMN users.first_name IS
 'First name of user.';
