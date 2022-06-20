@@ -3,9 +3,9 @@
 ## Table of Contents
 
 * [Run PostgreSQL on localhost](#run-postgresql-on-localhost)
-* [PostgreSQL via pgAdmin](##Connect-PostgreSQL-via-pgAdmin)
 * [Run in docker container](##Run-in-docker-container)
 * [Run with docker compose](##Run-containers-with-docker-compose)
+* [Database Schema](##Database-Schema)
 
 ## Run PostgreSQL on localhost
 
@@ -34,18 +34,6 @@ You can then connect to the database with:
 ```shell
 $ psql database_name
 ```
-
-## Connect PostgreSQL via pgAdmin
-
-Open pgAdmin and right click on Server
-
-![Click on server](images/pgAdmin-guide1.png)
-
-Enter a name, hostname, port 5432 (default), database name and username.
-
-![Enter a name](images/pgAdmin-guide2.png)
-
-![Enter host name](images/pgAdmin-guide3.png)
 
 ## Run in docker container
 
@@ -133,4 +121,166 @@ Put the `docker-compose.yaml` file in the same folder as your project and run th
 
 At the same time, `docker-compose` will also create a network and put the container in it.
 
+## Database Schema
+
+![Database Schema](images/attorneytech-database-schema.jpg)
+
 [docker-compose-example]: <docker-compose-example.yaml>
+
+### Tables and Columns
+
+>This database is designed for law firms in Taiwan, so from this point of view, we need the following tables and columns.  
+>In addition, some words will be marked with Traditional Chinese (hereafter referred to as Chinese) explanation.  
+>_**All the tables use `PostgreSQL identity column` creates the id column as Primary Key in `GENERATED ALWAYS AS IDENTITY` way and the data type is `INTEGER`.**_
+
+#### `users`
+
+Contains _**clients**_ and _**agents**_.
+Store `client` or `agent` in `role` column to identify that row which one is.
+
+| Column       | Data Type            | Description                                                    |
+| :-----       | :-----               |:---                                                            |
+| id           | INTEGER              | An unique ID of user                                           |
+| role         | VARCHAR(50) NOT NULL | Identify clients or agents                                     |
+| username     | VARCHAR(20)          | Username of user                                               |
+| password     | VARCHAR(64)          | Password of user                    |
+| first_name   | VARCHAR(50) NOT NULL | First name of user                                             |
+| middle_name  | VARCHAR(50)          | Middle name of user                                            |
+| last_name    | VARCHAR(50) NOT NULL | Last name of user                                              |
+| email        | VARCHAR(50)          | Email of user                                                  |
+| phone        | VARCHAR(50)          | Phone number of user                                           |
+| street_name  | VARCHAR(100)         | The part of the user's address below the street name           |
+| district     | VARCHAR(20)          | The district name of user's address                            |
+| city         | VARCHAR(20)          | The city name of user's address                                |
+| zip_code     | VARCHAR(10)          | The zip code of user's address                                 |
+
+#### `opposite_clients`
+
+In administrative event or criminal event, the opposite is not a natural person（自然人）. \
+In that case, the agent is not important. \
+Another reason to separate the opposites into a table is that for the law firm, \
+it is necessary to pay attention to the conflict of interest（利益衝突）, the opposite is possible to become \
+a client in the future. \
+Therefore, it is necessary to check this before accepting a case. \
+In addition, because it's usually don't know the email and phone number of the opposite, \
+it's only need to know the papers sending address, so the columns for email and phone number \
+would not added in this table.
+
+| Column       | Data Type            | Description                                                     |
+| :---         | :----                | :---                                                            |
+| id           | INTEGER              | An unique ID of opposite client                              |
+| name         | VARCHAR(100)         | Name of administration or prosecutor                            |
+| first_name   | VARCHAR(50) NOT NULL | First name of opposite client                                   |
+| middle_name  | VARCHAR(50)          | Middle name of opposite client                                  |
+| last_name    | VARCHAR(50) NOT NULL | Last name of opposite client                                    |
+| street_name  | VARCHAR(100)         | The part of the opposite client's address below the street name |
+| district     | VARCHAR(20)          | The district name of opposite client's address                  |
+| city         | VARCHAR(20)          | The city name of opposite client's address                      |
+| zip_code     | VARCHAR(10)          | The zip code of opposite client's address                       |
+
+#### `opposite_agents`
+
+| Column       | Data Type            | Description                                                    |
+| :---         | :----                | :---                                                           |
+| id           | INTEGER              | An unique ID of opposite agent                              |
+| first_name   | VARCHAR(50) NOT NULL | First name of opposite agent                                   |
+| middle_name  | VARCHAR(50)          | Middle name of opposite agent                                  |
+| last_name    | VARCHAR(50) NOT NULL | Last name of opposite agent                                    |
+| email        | VARCHAR(50)          | Email of opposite agent                                        |
+| phone        | VARCHAR(50)          | Phone number of opposite agent                                 |
+| street_name  | VARCHAR(100)         | The part of the opposite agent's address below the street name |
+| district     | VARCHAR(20)          | The district name of opposite agent's address                  |
+| city         | VARCHAR(20)          | The city name of opposite agent's address                      |
+| zip_code     | VARCHAR(10)          | The city name of opposite agent's address                      |
+
+#### `courts`
+
+As mentioned above, and so on in the `case` mentioned below, build court into a table in order to associate `section_in_charge` and `case`.
+
+| Column       | Data Type                    | Description                                           |
+| :---         | :----                        | :---                                                  |
+| id           | INTEGER                      | An unique ID of court                               |
+| name         | VARCHAR(100) UNIQUE NOT NULL | Name of court                                         |
+| phone        | VARCHAR(50) NOT NULL         | Phone number of court                                 |
+| street_name  | VARCHAR(100)                 | The part of the court's address below the street name |
+| district     | VARCHAR(20)                  | The district name of court's address                  |
+| city         | VARCHAR(20)                  | The city name of court's address                      |
+| zip_code     | VARCHAR(10)                  | The zip code of court's address                       |
+
+#### `section_in_charges`
+
+Section in charge, which means “股別” in Chinese. In Taiwan's legal system, each case will be distributed to specific section in charge, it's important because when attorney want to contact court, he must go through section in charge.
+
+| Column            | Data Type        | Description                                    |
+| :---              | :----            | :---                                           |
+| id                | INTEGER          | An unique ID of section in charge              |
+| name              | VARCHAR(20)      | Name of section in charge                      |
+| clerk_first_name  | VARCHAR(50)      | Contact person's first name                    |
+| clerk_middle_name | VARCHAR(50)      | Contact person's middle name                   |
+| clerk_last_name   | VARCHAR(50)      | Contact person's last name                     |
+| extension_number  | VARCHAR(50)      | Section in charge's extension number           |
+| court_id          | INTEGER NOT NULL | Associated court ID with the section in charge |
+
+#### `events`
+
+An event is a collection of many cases, an event may walk through many instance levels of court（審級）, \
+and in each instance level of court will have different case number. \
+So it's necessary to separate the events into a table.
+
+| Column             | Data Type                    | Description                           |
+| :---               | :----                        | :---                                  |
+| id                 | INTEGER                      | An unique ID of event              |
+| name               | VARCHAR(100) UNIQUE NOT NULL | Event name like “甲與乙台北市東興路房地拆屋還地事件”, “丙被訴違反證券交易法事件”, “丁與台北市政府確認文山區土地公用地役關係存在事件”                             |
+| client_id          | INTEGER NOT NULL            | Associated with user ID, identify which client was involved in this event |
+| opposite_client_id | INTEGER NOT NULL            | Associated with user ID, identify which opposite client was involved in this event |
+
+#### `cases`
+
+Basically, in a law firm, it can be said that it operates by handling cases. Creating a table of case help us to associate with other tables.
+
+| Column                | Data Type            | Description                                     |
+| :---                  | :----                | :---                                            |
+| id                    | INTEGER              | An unique ID of case                     |
+| category              | VARCHAR(20) NOT NULL | Means “案件類別” in Chinese like “民事” or “刑事” |
+| year                  | smallint      | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
+| type                  | VARCHAR(50)          | Means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
+| number                | VARCHAR(20)          | Number of cases                                 |
+| cause_of_action       | VARCHAR(100)              | Which means “案由” in Chinese like “拆屋還地”          |
+| event_id              |INTEGER NOT NULL      | Associated with event ID mark the same case in whole lawsuit procedure to one event|
+| section_in_charges_id | INTEGER              | Associated with section_in_charge ID indicate which section in charge is handling this case |
+| court_id             | INTEGER              | Associated with court ID, indicate which court is handling this case            |
+| client_id             | INTEGER NOT NULL     | Associated with user ID, to identify which client was involved in this case              |
+| agent_id              | INTEGER NOT NULL     | Associated with user ID, to identify which agent in charge of this case              |
+| opposite_client_id    | INTEGER              | Associated with opposite client ID, to identify which opposite client was involved in this case   |
+| opposite_agent_id     | INTEGER              | Associated with opposite agent ID, to identify which opposite''s agent in charge of this case     |
+
+#### `paper_files`
+
+Paper's files
+
+| Column | Data Type                    | Description                           |
+| :---   | :----                        | :---                                  |
+| id     | INTEGER                      | An unique ID of paper file            |
+| name   | VARCHAR(100) UNIQUE NOT NULL | Name of aper file                     |
+| file   | bytea                        | Paper file, store in bytea data type. |
+
+#### `papers`
+
+Contains _**paper_sent**_ and _**paper_received**_.
+Enter `paper_sent` or `paper_received` in `category` column to identify  
+that row which one is.
+
+| Column        | Data Type                   | Description                                           |
+| :---          | :----                       | :---                                                  |
+| id            | INTEGER                     | An unique ID of a court                               |
+| category      | VARCHAR(50)  NOT NULL       | Identify paper sent or received                       |
+| title         | VARCHAR(100) NOT NULL       | The paper's title like “民事答辯狀”, “刑事辯護狀”         |
+| subject       | VARCHAR(400) NOT NULL       | Subject of paper                                      |
+| sent_date     | DATE                        | Sent date of paper                                    |
+| arrival_date  | DATE                        | Paper we send and it's arrival date                   |
+| received_date | DATE                        | Paper from opposite that when we received             |
+| deadline_date | DATE                        | If paper we received has something need to do         |
+| court_date    | TIMESTAMP                   | Next court date and time                              |
+| paper_type    | VARCHAR(50) NOT NULL        | Paper's type like “起訴狀”, “答辯狀”                    |
+| case_id       | INTEGER NOT NULL            | Associated with case ID, to identify which case the paper is belong to |
+| paper_file_id | INTEGER NOT NULL            | Associated with paper file ID, to indicate the file of paper |
