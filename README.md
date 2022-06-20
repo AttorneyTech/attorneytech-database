@@ -140,19 +140,19 @@ Store `client` or `agent` in `role` column to identify that row which one is.
 
 | Column       | Data Type            | Description                                                    |
 | :-----       | :-----               |:---                                                            |
-| id           | INTEGER              | An unique ID of an user.                                            |
-| role         | VARCHAR(50) NOT NULL | identify clients or agents                                     |
-| username     | VARCHAR(20)          | username of clients or agents                    |
-| password     | VARCHAR(64)          | password of clients or agents. Hashed with SHA256|
-| first_name   | VARCHAR(50) NOT NULL | first name                                                     |
-| middle_name  | VARCHAR(50)          | middle name                                                    |
-| last_name    | VARCHAR(50) NOT NULL | last name                                                      |
-| email        | VARCHAR(50)          | email                                                          |
-| phone | VARCHAR(50)          | phone number                                                   |
-| street_name  | VARCHAR(100)         | street name and number, floor, etc                             |
-| district     | VARCHAR(20)          | district name                                                  |
-| city         | VARCHAR(20)          | city name                                                      |
-| zip_code     | VARCHAR(10)          | zip code                                                       |
+| id           | INTEGER              | An unique ID of user                                           |
+| role         | VARCHAR(50) NOT NULL | Identify clients or agents                                     |
+| username     | VARCHAR(20)          | Username of user                                               |
+| password     | VARCHAR(64)          | Password of user, hashed with SHA256                           |
+| first_name   | VARCHAR(50) NOT NULL | First name of user                                             |
+| middle_name  | VARCHAR(50)          | Middle name of user                                            |
+| last_name    | VARCHAR(50) NOT NULL | Last name of user                                              |
+| email        | VARCHAR(50)          | Email of user                                                  |
+| phone        | VARCHAR(50)          | Phone number of user                                           |
+| street_name  | VARCHAR(100)         | The part of the user's address below the street name           |
+| district     | VARCHAR(20)          | The district name of user's address                            |
+| city         | VARCHAR(20)          | The city name of user's address                                |
+| zip_code     | VARCHAR(10)          | The zip code of user's address                                 |
 
 #### `opposite_clients`
 
@@ -166,46 +166,46 @@ In addition, because it's usually don't know the email and phone number of the o
 it's only need to know the papers sending address, so the columns for email and phone number \
 would not added in this table.
 
-| Column       | Data Type            | Description                          |
-| :---         | :----                | :---                                 |
-| id           | INTEGER              | An unique ID of an opposite client   |
-| name         | VARCHAR(100)         | name of administration or prosecutor |
-| first_name   | VARCHAR(50) NOT NULL | first name                           |
-| middle_name  | VARCHAR(50)          | middle name                          |
-| last_name    | VARCHAR(50) NOT NULL | last name                            |
-| street_name  | VARCHAR(100)         | street name and number, floor, etc   |
-| district     | VARCHAR(20)          | district name                        |
-| city         | VARCHAR(20)          | city name                            |
-| zip_code     | VARCHAR(10)          | zip code                             |
+| Column       | Data Type            | Description                                                     |
+| :---         | :----                | :---                                                            |
+| id           | INTEGER              | An unique ID of opposite client                              |
+| name         | VARCHAR(100)         | Name of administration or prosecutor                            |
+| first_name   | VARCHAR(50) NOT NULL | First name of opposite client                                   |
+| middle_name  | VARCHAR(50)          | Middle name of opposite client                                  |
+| last_name    | VARCHAR(50) NOT NULL | Last name of opposite client                                    |
+| street_name  | VARCHAR(100)         | The part of the opposite client's address below the street name |
+| district     | VARCHAR(20)          | The district name of opposite client's address                  |
+| city         | VARCHAR(20)          | The city name of opposite client's address                      |
+| zip_code     | VARCHAR(10)          | The zip code of opposite client's address                       |
 
 #### `opposite_agents`
 
-| Column       | Data Type            | Description                         |
-| :---         | :----                | :---                                |
-| id           | INTEGER              | An unique ID of an opposite agent   |
-| first_name   | VARCHAR(50) NOT NULL | first name                          |
-| middle_name  | VARCHAR(50)          | middle name                         |
-| last_name    | VARCHAR(50) NOT NULL | last name                           |
-| email        | VARCHAR(50)          | email                               |
-| phone        | VARCHAR(50)          | phone number                        |
-| street_name  | VARCHAR(100)         | street name and number, floor, etc  |
-| district     | VARCHAR(20)          | district name                       |
-| city         | VARCHAR(20)          | city name                           |
-| zip_code     | VARCHAR(10)          | zip code                            |
+| Column       | Data Type            | Description                                                    |
+| :---         | :----                | :---                                                           |
+| id           | INTEGER              | An unique ID of opposite agent                              |
+| first_name   | VARCHAR(50) NOT NULL | First name of opposite agent                                   |
+| middle_name  | VARCHAR(50)          | Middle name of opposite agent                                  |
+| last_name    | VARCHAR(50) NOT NULL | Last name of opposite agent                                    |
+| email        | VARCHAR(50)          | Email of opposite agent                                        |
+| phone        | VARCHAR(50)          | Phone number of opposite agent                                 |
+| street_name  | VARCHAR(100)         | The part of the opposite agent's address below the street name |
+| district     | VARCHAR(20)          | The district name of opposite agent's address                  |
+| city         | VARCHAR(20)          | The city name of opposite agent's address                      |
+| zip_code     | VARCHAR(10)          | The city name of opposite agent's address                      |
 
 #### `courts`
 
 As mentioned above, and so on in the `case` mentioned below, build court into a table in order to associate `section_in_charge` and `case`.
 
-| Column       | Data Type                    | Description                        |
-| :---         | :----                        | :---                               |
-| id           | INTEGER                      | An unique ID of a court            |
-| name         | VARCHAR(100) UNIQUE NOT NULL | name of court                      |
-| phone        | VARCHAR(50) NOT NULL         | phone number of court              |
-| street_name  | VARCHAR(100)                 | street name and number, floor, etc |
-| district     | VARCHAR(20)                  | district name                      |
-| city         | VARCHAR(20)                  | city name                          |
-| zip_code     | VARCHAR(10)                  | zip code                           |
+| Column       | Data Type                    | Description                                           |
+| :---         | :----                        | :---                                                  |
+| id           | INTEGER                      | An unique ID of court                               |
+| name         | VARCHAR(100) UNIQUE NOT NULL | Name of court                                         |
+| phone        | VARCHAR(50) NOT NULL         | Phone number of court                                 |
+| street_name  | VARCHAR(100)                 | The part of the court's address below the street name |
+| district     | VARCHAR(20)                  | The district name of court's address                  |
+| city         | VARCHAR(20)                  | The city name of court's address                      |
+| zip_code     | VARCHAR(10)                  | The zip code of court's address                       |
 
 #### `section_in_charges`
 
@@ -214,10 +214,11 @@ Section in charge, which means “股別” in Chinese. In Taiwan's legal system
 | Column            | Data Type        | Description                                    |
 | :---              | :----            | :---                                           |
 | id                | INTEGER          | An unique ID of section in charge              |
-| name              | VARCHAR(20)      | name of section in charge                      |
-| clerk_first_name  | VARCHAR(50)      | contact person's first name                    |
-| clerk_last_name   | VARCHAR(50)      | contact person's last name                     |
-| extension_number  | VARCHAR(50)      | extension number                               |
+| name              | VARCHAR(20)      | Name of section in charge                      |
+| clerk_first_name  | VARCHAR(50)      | Contact person's first name                    |
+| clerk_middle_name | VARCHAR(50)      | Contact person's middle name                   |
+| clerk_last_name   | VARCHAR(50)      | Contact person's last name                     |
+| extension_number  | VARCHAR(50)      | Section in charge's extension number           |
 | court_id          | INTEGER NOT NULL | Associated court ID with the section in charge |
 
 #### `events`
@@ -228,8 +229,8 @@ So it's necessary to separate the events into a table.
 
 | Column             | Data Type                    | Description                           |
 | :---               | :----                        | :---                                  |
-| id                 | INTEGER                      | An unique ID of an event              |
-| name               | VARCHAR(100) UNIQUE NOT NULL | event name like “甲與乙台北市東興路房地拆屋還地事件”, “丙被訴違反證券交易法事件”, “丁與台北市政府確認文山區土地公用地役關係存在事件”                             |
+| id                 | INTEGER                      | An unique ID of event              |
+| name               | VARCHAR(100) UNIQUE NOT NULL | Event name like “甲與乙台北市東興路房地拆屋還地事件”, “丙被訴違反證券交易法事件”, “丁與台北市政府確認文山區土地公用地役關係存在事件”                             |
 | client_id          | INTEGER NOT NULL            | Associated with user ID, identify which client was involved in this event |
 | opposite_client_id | INTEGER NOT NULL            | Associated with user ID, identify which opposite client was involved in this event |
 
@@ -239,12 +240,12 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 
 | Column                | Data Type            | Description                                     |
 | :---                  | :----                | :---                                            |
-| id                    | INTEGER              | An unique ID of a case                     |
-| category              | VARCHAR(20) NOT NULL | means “案件類別” in Chinese like “民事” or “刑事” |
-| year                  | VARCHAR(20)      | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
-| type                  | VARCHAR(50)          | means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
-| number                | VARCHAR(10)          | number of cases                                 |
-| cause_of_action       | VARCHAR(100)              | which means “案由” in Chinese like “拆屋還地”          |
+| id                    | INTEGER              | An unique ID of case                     |
+| category              | VARCHAR(20) NOT NULL | Means “案件類別” in Chinese like “民事” or “刑事” |
+| year                  | smallint      | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
+| type                  | VARCHAR(50)          | Means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
+| number                | VARCHAR(20)          | Number of cases                                 |
+| cause_of_action       | VARCHAR(100)              | Which means “案由” in Chinese like “拆屋還地”          |
 | event_id              |INTEGER NOT NULL      | Associated with event ID mark the same case in whole lawsuit procedure to one event|
 | section_in_charges_id | INTEGER              | Associated with section_in_charge ID indicate which section in charge is handling this case |
 | court_id             | INTEGER              | Associated with court ID, indicate which court is handling this case            |
@@ -259,9 +260,9 @@ Paper's files
 
 | Column | Data Type                    | Description                           |
 | :---   | :----                        | :---                                  |
-| id     | INTEGER                      | An unique ID of a paper file          |
-| name   | VARCHAR(100) UNIQUE NOT NULL | paper file name                       |
-| file   | bytea                        | paper file, store in bytea data type. |
+| id     | INTEGER                      | An unique ID of paper file            |
+| name   | VARCHAR(100) UNIQUE NOT NULL | Name of aper file                     |
+| file   | bytea                        | Paper file, store in bytea data type. |
 
 #### `papers`
 
@@ -272,14 +273,14 @@ that row which one is.
 | Column        | Data Type                   | Description                                           |
 | :---          | :----                       | :---                                                  |
 | id            | INTEGER                     | An unique ID of a court                               |
-| category      | VARCHAR(50)  NOT NULL       | identify paper sent or received                       |
-| title         | VARCHAR(100) NOT NULL       | the paper's title like “民事答辯狀”, “刑事辯護狀”        |
-| subject       | VARCHAR(400) NOT NULL       | subject of papers                                     |
-| sent_date     | DATE                        | sent date of papers                                   |
-| arrival_date  | DATE                        | papers we send and it's arrival date                  |
-| received_date | DATE                        | papers from opposite that when we received            |
-| deadline_date | DATE                        | if papers we received has something need to do        |
-| court_date    | TIMESTAMP                   | next court date and time                              |
-| paper_type    | VARCHAR(50) NOT NULL        | like “起訴狀”, “答辯狀”                                 |
+| category      | VARCHAR(50)  NOT NULL       | Identify paper sent or received                       |
+| title         | VARCHAR(100) NOT NULL       | The paper's title like “民事答辯狀”, “刑事辯護狀”         |
+| subject       | VARCHAR(400) NOT NULL       | Subject of paper                                      |
+| sent_date     | DATE                        | Sent date of paper                                    |
+| arrival_date  | DATE                        | Paper we send and it's arrival date                   |
+| received_date | DATE                        | Paper from opposite that when we received             |
+| deadline_date | DATE                        | If paper we received has something need to do         |
+| court_date    | TIMESTAMP                   | Next court date and time                              |
+| paper_type    | VARCHAR(50) NOT NULL        | Paper's type like “起訴狀”, “答辯狀”                    |
 | case_id       | INTEGER NOT NULL            | Associated with case ID, to identify which case the paper is belong to |
-| paper_file_id | INTEGER NOT NULL            | Associated with paper file ID, to indicate the file of paper                       |
+| paper_file_id | INTEGER NOT NULL            | Associated with paper file ID, to indicate the file of paper |

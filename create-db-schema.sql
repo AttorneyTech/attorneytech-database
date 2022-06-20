@@ -205,6 +205,7 @@ CREATE TABLE section_in_charges (
   (START WITH 653 INCREMENT BY 21) PRIMARY KEY,
   name VARCHAR(20),
   clerk_first_name VARCHAR(50),
+  clerk_middle_name VARCHAR(50),
   clerk_last_name VARCHAR(50),
   extension_number VARCHAR(50),
   court_id INTEGER REFERENCES courts(id)
@@ -225,6 +226,9 @@ COMMENT ON COLUMN section_in_charges.name IS
 
 COMMENT ON COLUMN section_in_charges.clerk_first_name IS
 'First name of contact person.';
+
+COMMENT ON COLUMN section_in_charges.clerk_middle_name IS
+'Middle name of contact person.';
 
 COMMENT ON COLUMN section_in_charges.clerk_last_name IS
 'Last name of contact person.';
@@ -272,7 +276,7 @@ CREATE TABLE cases (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 973 INCREMENT BY 29) PRIMARY KEY,
   category VARCHAR(20) NOT NULL,
-  year VARCHAR(20),
+  year smallint,
   type VARCHAR(50),
   number VARCHAR(20),
   cause_of_action VARCHAR(100),
