@@ -147,7 +147,7 @@ Store `client` or `agent` in `role` column to identify that row which one is.
 | first_name   | VARCHAR(50) NOT NULL | First name of user                                             |
 | middle_name  | VARCHAR(50)          | Middle name of user                                            |
 | last_name    | VARCHAR(50) NOT NULL | Last name of user                                              |
-| email        | VARCHAR(50)          | Email of user                                                  |
+| email        | VARCHAR(50) NOT NULL | Email of user                                                  |
 | phone        | VARCHAR(50)          | Phone number of user                                           |
 | street_name  | VARCHAR(100)         | The part of the user's address below the street name           |
 | district     | VARCHAR(20)          | The district name of user's address                            |
