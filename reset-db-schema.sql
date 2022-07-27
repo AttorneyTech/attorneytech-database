@@ -213,7 +213,7 @@ DROP TABLE IF EXISTS section_in_charges CASCADE;
 CREATE TABLE section_in_charges (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 653 INCREMENT BY 21) PRIMARY KEY,
-  name VARCHAR(20),
+  name VARCHAR(20) NOT NULL,
   clerk_first_name VARCHAR(50),
   clerk_middle_name VARCHAR(50),
   clerk_last_name VARCHAR(50),

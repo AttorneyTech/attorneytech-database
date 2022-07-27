@@ -214,7 +214,7 @@ Section in charge, which means “股別” in Chinese. In Taiwan's legal system
 | Column            | Data Type        | Description                                    |
 | :---              | :----            | :---                                           |
 | id                | INTEGER          | An unique ID of section in charge              |
-| name              | VARCHAR(20)      | Name of section in charge                      |
+| name              | VARCHAR(20) NOT NULL     | Name of section in charge                      |
 | clerk_first_name  | VARCHAR(50)      | Contact person's first name                    |
 | clerk_middle_name | VARCHAR(50)      | Contact person's middle name                   |
 | clerk_last_name   | VARCHAR(50)      | Contact person's last name                     |
