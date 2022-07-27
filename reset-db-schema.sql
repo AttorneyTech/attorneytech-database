@@ -353,7 +353,7 @@ CREATE TABLE paper_files (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 3132 INCREMENT BY 47) PRIMARY KEY,
   name VARCHAR(100) UNIQUE NOT NULL,
-  file bytea
+  file bytea NOT NULL
 );
 
 /* Comment of paper_files table */

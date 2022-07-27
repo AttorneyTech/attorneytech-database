@@ -261,7 +261,7 @@ Paper's files
 | :---   | :----                        | :---                                  |
 | id     | INTEGER                      | An unique ID of paper file            |
 | name   | VARCHAR(100) UNIQUE NOT NULL | Name of aper file                     |
-| file   | bytea                        | Paper file, store in bytea data type. |
+| file   | bytea NOT NULL               | Paper file, store in bytea data type. |
 
 #### `papers`
 
