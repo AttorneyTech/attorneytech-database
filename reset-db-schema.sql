@@ -5,12 +5,12 @@ CREATE TABLE users (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 103 INCREMENT BY 13) PRIMARY KEY,
   role VARCHAR(50) NOT NULL,
-  username VARCHAR(20),
+  username VARCHAR(20) UNIQUE,
   password VARCHAR(64),
   first_name VARCHAR (50) NOT NULL,
   middle_name VARCHAR(50),
   last_name VARCHAR(50) NOT NULL,
-  email VARCHAR(50) NOT NULL,
+  email VARCHAR(50) UNIQUE NOT NULL,
   phone	VARCHAR(50),
   street_name	VARCHAR(100),
   district VARCHAR(20),
@@ -256,9 +256,7 @@ DROP TABLE IF EXISTS events CASCADE;
 CREATE TABLE events (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 1013 INCREMENT BY 47) PRIMARY KEY,
-  name VARCHAR(100) UNIQUE NOT NULL,
-  client_id INTEGER REFERENCES users(id) NOT NULL,
-  opposite_client_id INTEGER REFERENCES opposite_clients(id) NOT NULL
+  name VARCHAR(100) UNIQUE NOT NULL
 );
 
 /* Comment of events table */

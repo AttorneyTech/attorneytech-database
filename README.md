@@ -123,7 +123,7 @@ At the same time, `docker-compose` will also create a network and put the contai
 
 ## Database Schema
 
-![Database Schema](images/attorneytech-database-schema.jpg)
+![Database Schema](images/attorneytech-database-schema.png)
 
 [docker-compose-example]: <docker-compose-example.yaml>
 
@@ -138,21 +138,21 @@ At the same time, `docker-compose` will also create a network and put the contai
 Contains _**clients**_ and _**agents**_.
 Store `client` or `agent` in `role` column to identify that row which one is.
 
-| Column       | Data Type            | Description                                                    |
-| :-----       | :-----               |:---                                                            |
-| id           | INTEGER              | An unique ID of user                                           |
-| role         | VARCHAR(50) NOT NULL | Identify clients or agents                                     |
-| username     | VARCHAR(20)          | Username of user                                               |
-| password     | VARCHAR(64)          | Password of user                    |
-| first_name   | VARCHAR(50) NOT NULL | First name of user                                             |
-| middle_name  | VARCHAR(50)          | Middle name of user                                            |
-| last_name    | VARCHAR(50) NOT NULL | Last name of user                                              |
-| email        | VARCHAR(50) NOT NULL | Email of user                                                  |
-| phone        | VARCHAR(50)          | Phone number of user                                           |
-| street_name  | VARCHAR(100)         | The part of the user's address below the street name           |
-| district     | VARCHAR(20)          | The district name of user's address                            |
-| city         | VARCHAR(20)          | The city name of user's address                                |
-| zip_code     | VARCHAR(10)          | The zip code of user's address                                 |
+| Column       | Data Type                   | Description                                                    |
+| :-----       | :-----                      |:---                                                            |
+| id           | INTEGER                     | An unique ID of user                                           |
+| role         | VARCHAR(50) NOT NULL        | Identify clients or agents                                     |
+| username     | VARCHAR(20) UNIQUE          | Username of user                                               |
+| password     | VARCHAR(64)                 | Password of user                                               |
+| first_name   | VARCHAR(50) NOT NULL        | First name of user                                             |
+| middle_name  | VARCHAR(50)                 | Middle name of user                                            |
+| last_name    | VARCHAR(50) NOT NULL        | Last name of user                                              |
+| email        | VARCHAR(50) UNIQUE NOT NULL | Email of user                                                  |
+| phone        | VARCHAR(50)                 | Phone number of user                                           |
+| street_name  | VARCHAR(100)                | The part of the user's address below the street name           |
+| district     | VARCHAR(20)                 | The district name of user's address                            |
+| city         | VARCHAR(20)                 | The city name of user's address                                |
+| zip_code     | VARCHAR(10)                 | The zip code of user's address                                 |
 
 #### `opposite_clients`
 
@@ -225,14 +225,12 @@ Section in charge, which means “股別” in Chinese. In Taiwan's legal system
 
 An event is a collection of many cases, an event may walk through many instance levels of court（審級）, \
 and in each instance level of court will have different case number. \
-So it's necessary to separate the events into a table.
+So it's necessary to separate the events into a validation table.
 
 | Column             | Data Type                    | Description                           |
 | :---               | :----                        | :---                                  |
 | id                 | INTEGER                      | An unique ID of event              |
 | name               | VARCHAR(100) UNIQUE NOT NULL | Event name like “甲與乙台北市東興路房地拆屋還地事件”, “丙被訴違反證券交易法事件”, “丁與台北市政府確認文山區土地公用地役關係存在事件”                             |
-| client_id          | INTEGER NOT NULL            | Associated with user ID, identify which client was involved in this event |
-| opposite_client_id | INTEGER NOT NULL            | Associated with user ID, identify which opposite client was involved in this event |
 
 #### `cases`
 
