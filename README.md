@@ -170,9 +170,9 @@ would not added in this table.
 | :---         | :----                | :---                                                            |
 | id           | INTEGER              | An unique ID of opposite client                              |
 | name         | VARCHAR(100)         | Name of administration or prosecutor                            |
-| first_name   | VARCHAR(50) NOT NULL | First name of opposite client                                   |
+| first_name   | VARCHAR(50)          | First name of opposite client                                   |
 | middle_name  | VARCHAR(50)          | Middle name of opposite client                                  |
-| last_name    | VARCHAR(50) NOT NULL | Last name of opposite client                                    |
+| last_name    | VARCHAR(50)          | Last name of opposite client                                    |
 | street_name  | VARCHAR(100)         | The part of the opposite client's address below the street name |
 | district     | VARCHAR(20)          | The district name of opposite client's address                  |
 | city         | VARCHAR(20)          | The city name of opposite client's address                      |
