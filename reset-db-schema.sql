@@ -272,21 +272,13 @@ COMMENT ON COLUMN events.id IS
 COMMENT ON COLUMN events.name IS
 'The subject of event between client and opposite client.';
 
-COMMENT ON COLUMN events.client_id IS
-'Associated with user ID, identify which client was
-involved in this event.';
-
-COMMENT ON COLUMN events.opposite_client_id IS
-'Associated with user ID, identify which opposite client
-was involved in this event.';
-
-
 /* Create table of cases */
 DROP TABLE IF EXISTS cases CASCADE;
 
 CREATE TABLE cases (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 973 INCREMENT BY 29) PRIMARY KEY,
+  case_closed BOOLEAN NOT NULL,
   category VARCHAR(20) NOT NULL,
   year smallint,
   type VARCHAR(50),
@@ -308,6 +300,9 @@ COMMENT ON TABLE cases IS
 /* Comments of cases table's columns */
 COMMENT ON COLUMN cases.id IS
 'An unique ID of a case.';
+
+COMMENT ON COLUMN cases.case_closed IS
+'Describe the case has been closed or not';
 
 COMMENT ON COLUMN cases.category IS
 'Category of cases. Means “案件類別” in Chinese like “民事” or “刑事”.';

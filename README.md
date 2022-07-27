@@ -123,7 +123,7 @@ At the same time, `docker-compose` will also create a network and put the contai
 
 ## Database Schema
 
-![Database Schema](images/attorneytech-database-schema.png)
+![Database Schema](attorneytech-database-schema.png)
 
 [docker-compose-example]: <docker-compose-example.yaml>
 
@@ -239,6 +239,7 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | Column                | Data Type            | Description                                     |
 | :---                  | :----                | :---                                            |
 | id                    | INTEGER              | An unique ID of case                     |
+| case_closed           | boolean              | The case has been closed or not|
 | category              | VARCHAR(20) NOT NULL | Means “案件類別” in Chinese like “民事” or “刑事” |
 | year                  | smallint      | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
 | type                  | VARCHAR(50)          | Means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
