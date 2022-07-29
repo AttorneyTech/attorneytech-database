@@ -123,7 +123,7 @@ At the same time, `docker-compose` will also create a network and put the contai
 
 ## Database Schema
 
-![Database Schema](images/attorneytech-database-schema.png)
+![Database Schema](attorneytech-database-schema.png)
 
 [docker-compose-example]: <docker-compose-example.yaml>
 
@@ -170,9 +170,9 @@ would not added in this table.
 | :---         | :----                | :---                                                            |
 | id           | INTEGER              | An unique ID of opposite client                              |
 | name         | VARCHAR(100)         | Name of administration or prosecutor                            |
-| first_name   | VARCHAR(50) NOT NULL | First name of opposite client                                   |
+| first_name   | VARCHAR(50)          | First name of opposite client                                   |
 | middle_name  | VARCHAR(50)          | Middle name of opposite client                                  |
-| last_name    | VARCHAR(50) NOT NULL | Last name of opposite client                                    |
+| last_name    | VARCHAR(50)          | Last name of opposite client                                    |
 | street_name  | VARCHAR(100)         | The part of the opposite client's address below the street name |
 | district     | VARCHAR(20)          | The district name of opposite client's address                  |
 | city         | VARCHAR(20)          | The city name of opposite client's address                      |
@@ -214,7 +214,7 @@ Section in charge, which means “股別” in Chinese. In Taiwan's legal system
 | Column            | Data Type        | Description                                    |
 | :---              | :----            | :---                                           |
 | id                | INTEGER          | An unique ID of section in charge              |
-| name              | VARCHAR(20)      | Name of section in charge                      |
+| name              | VARCHAR(20) NOT NULL     | Name of section in charge                      |
 | clerk_first_name  | VARCHAR(50)      | Contact person's first name                    |
 | clerk_middle_name | VARCHAR(50)      | Contact person's middle name                   |
 | clerk_last_name   | VARCHAR(50)      | Contact person's last name                     |
@@ -239,6 +239,7 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | Column                | Data Type            | Description                                     |
 | :---                  | :----                | :---                                            |
 | id                    | INTEGER              | An unique ID of case                     |
+| case_closed           | boolean              | The case has been closed or not|
 | category              | VARCHAR(20) NOT NULL | Means “案件類別” in Chinese like “民事” or “刑事” |
 | year                  | smallint      | The year of the case, Taiwan's legal system is mainly calculated from the years of the Republic of China. For example, 2022 year is equal to 111 year in Taiwan.  |
 | type                  | VARCHAR(50)          | Means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
@@ -260,7 +261,7 @@ Paper's files
 | :---   | :----                        | :---                                  |
 | id     | INTEGER                      | An unique ID of paper file            |
 | name   | VARCHAR(100) UNIQUE NOT NULL | Name of aper file                     |
-| file   | bytea                        | Paper file, store in bytea data type. |
+| file   | bytea NOT NULL               | Paper file, store in bytea data type. |
 
 #### `papers`
 
