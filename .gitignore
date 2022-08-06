@@ -1,9 +1,6 @@
 # The file of macOS system 
 .DS_Store
 
-# Docker files
-docker-compose.yaml
-
 # Python virtual environment files
 .venv
 
@@ -12,3 +9,4 @@ init_db.py
 
 # Configuration file
 config.json
+.env
