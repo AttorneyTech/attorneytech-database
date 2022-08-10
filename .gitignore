@@ -1,3 +1,12 @@
+# The file of macOS system 
 .DS_Store
-docker-compose.yaml
-.vscode
+
+# Python virtual environment files
+.venv
+
+# Initial the dummy data of database
+init_db.py
+
+# Configuration file
+config.json
+.env

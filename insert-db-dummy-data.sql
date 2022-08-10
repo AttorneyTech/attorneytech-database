@@ -5,7 +5,7 @@ VALUES
     '博愛路 356 號', '中正區', '台北市', '100'),
     ('client', 'client_2', 'password_2', '啟方', '吳', 'def@gmail.com', '0912345879',
     '西園路一段 200 號 8 樓', '萬華區', '台北市', '108'),
-    ('client', 'client_3', 'password_3', '俊文', '陳', 'def@gmail.com', '0955323879',
+    ('client', 'client_3', 'password_3', '俊文', '陳', 'ghi@gmail.com', '0955323879',
     '工業路 12 號', '大里區', '台中市', '412'),
     ('client', 'client_4', 'password_4', '至山', '黃', 'weqwek232@gmail.com', '0993345879',
     '中和路三段 483 號 12 樓之 3', '中和區', '新北市', '235'),
