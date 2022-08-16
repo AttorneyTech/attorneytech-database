@@ -2,15 +2,15 @@ INSERT INTO users (role, username, password, first_name, last_name, email,
     phone, street_name, district, city, zip_code)
 VALUES
     ('client', 'client_1', 'password_1', '青竹', '林', 'abc@gmail.com', '0912345678',
-    '博愛路 356 號', '中正區', '台北市', '100'),
+    '博愛路 356 號', '中正區', '臺北市', '100'),
     ('client', 'client_2', 'password_2', '啟方', '吳', 'def@gmail.com', '0912345879',
-    '西園路一段 200 號 8 樓', '萬華區', '台北市', '108'),
+    '西園路一段 200 號 8 樓', '萬華區', '臺北市', '108'),
     ('client', 'client_3', 'password_3', '俊文', '陳', 'ghi@gmail.com', '0955323879',
-    '工業路 12 號', '大里區', '台中市', '412'),
+    '工業路 12 號', '大里區', '臺中市', '412'),
     ('client', 'client_4', 'password_4', '至山', '黃', 'weqwek232@gmail.com', '0993345879',
     '中和路三段 483 號 12 樓之 3', '中和區', '新北市', '235'),
     ('agent', 'agent_1', 'password_1a', '律師', '謝', 'lawyear1@gmail.com', '0924345678',
-    '敦化南路一段 345 號 18 樓', '大安區', '台北市', '106');
+    '敦化南路一段 345 號 18 樓', '大安區', '臺北市', '106');
 
 
 INSERT INTO opposite_clients (name, first_name, last_name, street_name, district, city, zip_code)
