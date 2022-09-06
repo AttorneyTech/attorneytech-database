@@ -1,5 +1,7 @@
 # Database-PostgreSQL
 
+[中文版本（Chinese Version）](./README%20(Chinese).md)
+
 ## Table of Contents
 
 * [Run PostgreSQL on localhost](#run-postgresql-on-localhost)
@@ -59,7 +61,7 @@ $ docker pull postgres:14.3
 $ docker pull dpage/pgadmin4
 ```
 
-If not add tag, it will pull the latest version of image
+If not add tag (e.g. `postgres:14.3`), it will pull the latest version of image
 
 ### Create and run container
 
@@ -129,8 +131,8 @@ At the same time, `docker-compose` will also create a network and put the contai
 
 ### Tables and Columns
 
->This database is designed for law firms in Taiwan, so from this point of view, we need the following tables and columns.  
->In addition, some words will be marked with Traditional Chinese (hereafter referred to as Chinese) explanation.  
+>This database is designed for law firms in Taiwan, so from this point of view, we need the following tables and columns.
+>In addition, some words will be marked with Traditional Chinese (hereafter referred to as Chinese) explanation.
 >_**All the tables use `PostgreSQL identity column` creates the id column as Primary Key in `GENERATED ALWAYS AS IDENTITY` way and the data type is `INTEGER`.**_
 
 #### `users`
@@ -266,12 +268,12 @@ Paper's files
 #### `papers`
 
 Contains _**paper_sent**_ and _**paper_received**_.
-Enter `paper_sent` or `paper_received` in `category` column to identify  
+Enter `paper_sent` or `paper_received` in `category` column to identify
 that row which one is.
 
 | Column        | Data Type                   | Description                                           |
 | :---          | :----                       | :---                                                  |
-| id            | INTEGER                     | An unique ID of a court                               |
+| id            | INTEGER                     | An unique ID of a paper                               |
 | category      | VARCHAR(50)  NOT NULL       | Identify paper sent or received                       |
 | title         | VARCHAR(100) NOT NULL       | The paper's title like “民事答辯狀”, “刑事辯護狀”         |
 | subject       | VARCHAR(400) NOT NULL       | Subject of paper                                      |
