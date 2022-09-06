@@ -1,5 +1,8 @@
-# The file of macOS system 
+# The file of macOS system
 .DS_Store
+
+# Python venv
+.venv
 
 # Initial the dummy data of database
 init_db.py
