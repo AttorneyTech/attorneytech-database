@@ -254,6 +254,16 @@ Join table of cases and opposites
 | case_id     | INTEGER   | References the id column in cases     |
 | opposite_id | INTEGER   | References the id column in opposites |
 
+#### `paper_files`
+
+Paper's files
+
+| Column | Data Type                    | Description                           |
+| :---   | :----                        | :---                                  |
+| id     | INTEGER                      | An unique ID of paper file            |
+| name   | VARCHAR(100) UNIQUE NOT NULL | Name of aper file                     |
+| file   | bytea NOT NULL               | Paper file, store in bytea data type. |
+
 #### `papers`
 
 Contains _**paper_sent**_ and _**paper_received**_.
