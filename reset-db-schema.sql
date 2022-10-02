@@ -92,7 +92,7 @@ So in this case, we store the name into organization_name column.';
 COMMENT ON COLUMN opposites.id IS
 'An unique ID of an opposite.';
 
-COMMENT ON COLUMN opposite.organization_name IS
+COMMENT ON COLUMN opposites.organization_name IS
 'Name of administration or prosecutor.';
 
 COMMENT ON COLUMN opposites.first_name IS
@@ -101,13 +101,13 @@ COMMENT ON COLUMN opposites.first_name IS
 COMMENT ON COLUMN opposites.middle_name IS
 'Middle name of opposite.';
 
-COMMENT ON COLUMN opposite.last_name IS
+COMMENT ON COLUMN opposites.last_name IS
 'Last name of opposite.';
 
-COMMENT ON COLUMN opposite.email IS
+COMMENT ON COLUMN opposites.email IS
 'Email of opposite.';
 
-COMMENT ON COLUMN opposite.phone IS
+COMMENT ON COLUMN opposites.phone IS
 'Phone number of opposite.';
 
 COMMENT ON COLUMN opposites.street_name IS
@@ -116,7 +116,7 @@ COMMENT ON COLUMN opposites.street_name IS
 COMMENT ON COLUMN opposites.district IS
 'The district of opposite''s address.';
 
-COMMENT ON COLUMN opposite_s.city IS
+COMMENT ON COLUMN opposites.city IS
 'The city of opposite''s address.';
 
 COMMENT ON COLUMN opposites.zip_code IS
