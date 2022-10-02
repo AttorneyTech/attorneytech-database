@@ -168,9 +168,9 @@ So in this case, we store the name into organization_name column. \
 | id                | INTEGER              | An unique ID of opposite                                 |
 | role              | VARCHAR(50) NOT NULL | Identify the opposite is party or agent                  |
 | organization_name | VARCHAR(100)         | The name of organization                                 |
-| first_name        | VARCHAR(50) NOT NULL | First name of opposite                                   |
+| first_name        | VARCHAR(50)          | First name of opposite                                   |
 | middle_name       | VARCHAR(50)          | Middle name of opposite                                  |
-| last_name         | VARCHAR(50) NOT NULL | Last name of opposite                                    |
+| last_name         | VARCHAR(50)          | Last name of opposite                                    |
 | email             | VARCHAR(50)          | Email of opposite                                        |
 | phone             | VARCHAR(50)          | Phone number of opposite                                 |
 | street_name       | VARCHAR(100)         | The part of the opposite's address below the street name |

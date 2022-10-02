@@ -63,15 +63,15 @@ COMMENT ON COLUMN users.zip_code IS
 'The zip code of user''s address.';
 
 
-/* Create table of opposite_clients */
+/* Create table of opposites */
 DROP TABLE IF EXISTS opposites CASCADE;
 
-CREATE TABLE opposite_clients (
+CREATE TABLE opposites (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 273 INCREMENT BY 31) PRIMARY KEY,
-  role VARCHAR (50),
+  role VARCHAR(50),
   organization_name VARCHAR(100),
-  first_name VARCHAR (50),
+  first_name VARCHAR(50),
   middle_name VARCHAR(50),
   last_name VARCHAR(50),
   email VARCHAR(50),
