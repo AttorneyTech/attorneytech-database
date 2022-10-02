@@ -19,7 +19,7 @@ CREATE TABLE users (
 );
 
 /* Comment of users table */
-COMMENT ON TABLE users IS 
+COMMENT ON TABLE users IS
 'Contains information of clients and agents in this table.';
 
 /* Comments of users table's columns */
@@ -64,15 +64,18 @@ COMMENT ON COLUMN users.zip_code IS
 
 
 /* Create table of opposite_clients */
-DROP TABLE IF EXISTS opposite_clients CASCADE;
+DROP TABLE IF EXISTS opposites CASCADE;
 
 CREATE TABLE opposite_clients (
   id INTEGER GENERATED ALWAYS AS IDENTITY
   (START WITH 273 INCREMENT BY 31) PRIMARY KEY,
-  name VARCHAR(100),
+  role VARCHAR (50),
+  organization_name VARCHAR(100),
   first_name VARCHAR (50),
   middle_name VARCHAR(50),
   last_name VARCHAR(50),
+  email VARCHAR(50),
+  phone VARCHAR(50),
   street_name VARCHAR(100),
   district VARCHAR(20),
   city VARCHAR(20),
@@ -80,91 +83,44 @@ CREATE TABLE opposite_clients (
 );
 
 /* Comment of opposite_clients table*/
-COMMENT ON TABLE opposite_clients IS 
-'In administrative event or criminal event, the opposite client is 
-administration or prosecutor. In civil cases, the opposite client is natrual person.';
+COMMENT ON TABLE opposites IS
+'Contains party and agents and store they in `role` column to identify that row which one is.
+In administrative event or criminal event, the opposite is not a natural person.
+So in this case, we store the name into organization_name column.';
 
 /* Comments of opposite_clients table's columns */
-COMMENT ON COLUMN opposite_clients.id IS
-'An unique ID of an opposite client.';
+COMMENT ON COLUMN opposites.id IS
+'An unique ID of an opposite.';
 
-COMMENT ON COLUMN opposite_clients.name IS
+COMMENT ON COLUMN opposite.organization_name IS
 'Name of administration or prosecutor.';
 
-COMMENT ON COLUMN opposite_clients.first_name IS
-'First name of opposite client.';
+COMMENT ON COLUMN opposites.first_name IS
+'First name of opposite.';
 
-COMMENT ON COLUMN opposite_clients.middle_name IS
-'Middle name of opposite client.';
+COMMENT ON COLUMN opposites.middle_name IS
+'Middle name of opposite.';
 
-COMMENT ON COLUMN opposite_clients.last_name IS
-'Last name of opposite client.';
+COMMENT ON COLUMN opposite.last_name IS
+'Last name of opposite.';
 
-COMMENT ON COLUMN opposite_clients.street_name IS
-'The part of the opposite client''s address below the street name.';
+COMMENT ON COLUMN opposite.email IS
+'Email of opposite.';
 
-COMMENT ON COLUMN opposite_clients.district IS
-'The district of opposite client''s address.';
+COMMENT ON COLUMN opposite.phone IS
+'Phone number of opposite.';
 
-COMMENT ON COLUMN opposite_clients.city IS
-'The city of opposite client''s address.';
+COMMENT ON COLUMN opposites.street_name IS
+'The part of the opposite''s address below the street name.';
 
-COMMENT ON COLUMN opposite_clients.zip_code IS
-'The zip code of opposite client''s address.';
+COMMENT ON COLUMN opposites.district IS
+'The district of opposite''s address.';
 
+COMMENT ON COLUMN opposite_s.city IS
+'The city of opposite''s address.';
 
-/* Create table of opposite_agents */
-DROP TABLE IF EXISTS opposite_agents CASCADE;
-
-CREATE TABLE opposite_agents (
-  id INTEGER GENERATED ALWAYS AS IDENTITY
-  (START WITH 319 INCREMENT BY 18) PRIMARY KEY,
-  first_name VARCHAR (50) NOT NULL,
-  middle_name VARCHAR(50),
-  last_name VARCHAR(50) NOT NULL,
-  email VARCHAR(50),
-  phone	VARCHAR(50),
-  street_name VARCHAR(100),
-  district VARCHAR(20),
-  city VARCHAR(20),
-  zip_code VARCHAR(10)
-);
-
-/* Comment of opposite_agents table */
-COMMENT ON TABLE opposite_agents IS 
-'The agents of opposites.';
-
-/* Comments of opposite_agents table's columns */
-COMMENT ON COLUMN opposite_agents.id IS
-'An unique ID of an opposite agent.';
-
-COMMENT ON COLUMN opposite_agents.first_name IS
-'First name of opposite agent.';
-
-COMMENT ON COLUMN opposite_agents.middle_name IS
-'Middle name of opposite agent.';
-
-COMMENT ON COLUMN opposite_agents.last_name IS
-'Last name of opposite agent.';
-
-COMMENT ON COLUMN opposite_agents.email IS
-'Email of opposite agent.';
-
-COMMENT ON COLUMN opposite_agents.phone IS
-'Phone number of opposite agent.';
-
-COMMENT ON COLUMN opposite_agents.street_name IS
-'The part of the opposite agent''s address below the street name.';
-
-COMMENT ON COLUMN opposite_agents.district IS
-'The district of opposite agent''s address.';
-
-COMMENT ON COLUMN opposite_agents.city IS
-'The city of opposite agents''s address.';
-
-COMMENT ON COLUMN opposite_agents.zip_code IS
-'The zip code of opposite agents''s address.';
-
+COMMENT ON COLUMN opposites.zip_code IS
+'The zip code of opposite''s address.';
 
 /* Create table of courts */
 DROP TABLE IF EXISTS courts CASCADE;
@@ -181,7 +137,7 @@ CREATE TABLE courts (
 );
 
 /* Comment of courts table */
-COMMENT ON TABLE courts IS 
+COMMENT ON TABLE courts IS
 'The information of courts, include prosecutors office';
 
 /* Comments of courts table's columns */
@@ -222,9 +178,9 @@ CREATE TABLE section_in_charges (
 );
 
 /* Comment of section_in_charges table */
-COMMENT ON TABLE section_in_charges IS 
-'In Taiwan legal system, each case will be distributed to specific section in charge, 
-it is important because when attorney want to contact court, 
+COMMENT ON TABLE section_in_charges IS
+'In Taiwan legal system, each case will be distributed to specific section in charge,
+it is important because when attorney want to contact court,
 he must go through section in charge.';
 
 /* Comments of section_in_charges table's columns */
@@ -260,7 +216,7 @@ CREATE TABLE events (
 );
 
 /* Comment of events table */
-COMMENT ON TABLE events IS 
+COMMENT ON TABLE events IS
 'An event is a collection of many cases,
 an event may walk through many instance levels of court
 and in each instance level of court will have different case number.';
@@ -294,7 +250,7 @@ CREATE TABLE cases (
 );
 
 /* Comment of cases table */
-COMMENT ON TABLE cases IS 
+COMMENT ON TABLE cases IS
 'Creating a table of cases help us to associate with other tables.';
 
 /* Comments of cases table's columns */
@@ -357,7 +313,7 @@ CREATE TABLE paper_files (
 );
 
 /* Comment of paper_files table */
-COMMENT ON TABLE paper_files IS 
+COMMENT ON TABLE paper_files IS
 'Store paper files in this table.';
 
 /* Comments of paper_files table's columns */
@@ -391,7 +347,7 @@ CREATE TABLE papers (
 );
 
 /* Comment of papers table */
-COMMENT ON TABLE papers IS 
+COMMENT ON TABLE papers IS
 'Store all the papers that law firm deal with, contains paper_sent and paper_received.';
 
 /* Comments of papers table's columns */

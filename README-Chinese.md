@@ -4,9 +4,9 @@
 ## Table of Contents
 
 * [本地（localhost）執行 PostgreSQL](#本地-(localhost)-執行-PostgreSQL)
-* [執行於 docker container](##執行於-docker-container)
-* [Run with docker compose](##透過-docker-compose-運行容器-(container))
-* [Database Schema](##Database-Schema)
+* [執行於 docker container](#執行於-docker-container)
+* [Run with docker compose](#透過-docker-compose-運行容器-(container))
+* [Database Schema](#Database-Schema)
 
 ## 本地 (localhost) 執行 PostgreSQL
 
@@ -155,41 +155,25 @@ $ docker-compose up -d
 | city         | VARCHAR(20)                 | user 地址的城市名稱       |
 | zip_code     | VARCHAR(10)                 | user 地址的郵遞區號       |
 
-#### `opposite_clients (對造當事人)`
+#### `opposites (對造)`
 
-這邊會將 `opposite_clients(對造當事人)` 獨立成一張 table 的理由是，因為在行政訴訟或刑事訴訟，對造分別是行政機關或是檢察官。在刑事訴訟當中，檢察官本身就代表國家追訴犯罪，所以不會有代理人 (opposite_agents)。而在行政訴訟，機關雖然會以機關首長或是某個內部公務員為法定代理人，但我們關注的對象仍舊是行政機關本身。\
-以上兩種情形，我們關注的對象是行政機關或檢察官本身的主體性，所以有獨立記錄於一個 table 的必要。
+包含對造當事人（party）及對造代理人（agent）。
+如果是刑事案件或行政案件，則填入機關名稱於 organization_name。
 
-另一個理由是，對於律師事務所，因為對造當事人可能變成未來的客戶，在受理案件之前，有必要對此進行檢查，以避以免利益衝突。而將對造當事人獨立成一個 table，在做資料核對上會較為直接，方便。
-
-此外，由於通常不會知道對造當事人的電子郵件和電話號碼，對事務所而言，只需要知道書狀的送達地址即可，不需要在這張 table 裡面儲存對造當事人的電子郵件和電話號碼。
-
-| Column       | Data Type            | Description              |
-| :---         | :----                | :---                                                            |
-| id           | INTEGER              | 對造當事人的 unique ID            |
-| name         | VARCHAR(100)         | 行政機關或檢察官的名稱       |
-| first_name   | VARCHAR(50)          | 對造當事人的名          |
-| middle_name  | VARCHAR(50)          | 對造當事人的中間名       |
-| last_name    | VARCHAR(50)          | 對造當事人的姓  |
-| street_name  | VARCHAR(100)         | 對造當事人的地址 |
-| district     | VARCHAR(20)          | 對造當事人地址的行政區名稱 |
-| city         | VARCHAR(20)          | 對造當事人地址的城市名稱   |
-| zip_code     | VARCHAR(10)          | 對造當事人地址的郵遞區號   |
-
-#### `opposite_agents (對造代理人)`
-
-| Column       | Data Type            | Description                                                    |
-| :---         | :----                | :---                                                           |
-| id           | INTEGER              | 對造代理人的 unique ID   |
-| first_name   | VARCHAR(50) NOT NULL | 對造代理人的名           |
-| middle_name  | VARCHAR(50)          | 對造代理人的中間名     |
-| last_name    | VARCHAR(50) NOT NULL | 對造代理人的姓                |
-| email        | VARCHAR(50)          | 對造代理人的電子郵件    |
-| phone        | VARCHAR(50)          | 對造代理人的電話號碼 |
-| street_name  | VARCHAR(100)         | 對造代理人的地址 |
-| district     | VARCHAR(20)          | 對造代理人地址的行政區名稱    |
-| city         | VARCHAR(20)          | 對造代理人地址的城市名稱        |
-| zip_code     | VARCHAR(10)          | 對造代理人地址的郵遞區號   |
+| Column            | Data Type            | Description                                              |
+| :---              | :----                | :---                                                     |
+| id                | INTEGER              | An unique ID of opposite                                 |
+| role              | VARCHAR(50) NOT NULL | Identify the opposite is party or agent                  |
+| organization_name | VARCHAR(100)         | The name of organization                                 |
+| first_name        | VARCHAR(50) NOT NULL | First name of opposite                                   |
+| middle_name       | VARCHAR(50)          | Middle name of opposite                                  |
+| last_name         | VARCHAR(50) NOT NULL | Last name of opposite                                    |
+| email             | VARCHAR(50)          | Email of opposite                                        |
+| phone             | VARCHAR(50)          | Phone number of opposite                                 |
+| street_name       | VARCHAR(100)         | The part of the opposite's address below the street name |
+| district          | VARCHAR(20)          | The district name of opposite's address                  |
+| city              | VARCHAR(20)          | The city name of opposite's address                      |
+| zip_code          | VARCHAR(10)          | The city name of opposite's address                      |
 
 #### `courts(法院)`
 

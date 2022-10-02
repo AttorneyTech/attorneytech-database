@@ -5,9 +5,9 @@
 ## Table of Contents
 
 * [Run PostgreSQL on localhost](#run-postgresql-on-localhost)
-* [Run in docker container](##Run-in-docker-container)
-* [Run with docker compose](##Run-containers-with-docker-compose)
-* [Database Schema](##Database-Schema)
+* [Run in docker container](#run-in-docker-container)
+* [Run with docker compose](#run-containers-with-docker-compose)
+* [Database Schema](#database-schema)
 
 ## Run PostgreSQL on localhost
 
@@ -156,44 +156,27 @@ Store `client` or `agent` in `role` column to identify that row which one is.
 | city         | VARCHAR(20)                 | The city name of user's address                                |
 | zip_code     | VARCHAR(10)                 | The zip code of user's address                                 |
 
-#### `opposite_clients`
+#### `opposites`
 
+Contains _**party**_ and _**agents**_.
+Store `party` or `agent` in `role` column to identify that row which one is.
 In administrative event or criminal event, the opposite is not a natural person（自然人）. \
-In that case, the agent is not important. \
-Another reason to separate the opposites into a table is that for the law firm, \
-it is necessary to pay attention to the conflict of interest（利益衝突）, the opposite is possible to become \
-a client in the future. \
-Therefore, it is necessary to check this before accepting a case. \
-In addition, because it's usually don't know the email and phone number of the opposite, \
-it's only need to know the papers sending address, so the columns for email and phone number \
-would not added in this table.
+So in this case, we store the name into organization_name column. \
 
-| Column       | Data Type            | Description                                                     |
-| :---         | :----                | :---                                                            |
-| id           | INTEGER              | An unique ID of opposite client                              |
-| name         | VARCHAR(100)         | Name of administration or prosecutor                            |
-| first_name   | VARCHAR(50)          | First name of opposite client                                   |
-| middle_name  | VARCHAR(50)          | Middle name of opposite client                                  |
-| last_name    | VARCHAR(50)          | Last name of opposite client                                    |
-| street_name  | VARCHAR(100)         | The part of the opposite client's address below the street name |
-| district     | VARCHAR(20)          | The district name of opposite client's address                  |
-| city         | VARCHAR(20)          | The city name of opposite client's address                      |
-| zip_code     | VARCHAR(10)          | The zip code of opposite client's address                       |
-
-#### `opposite_agents`
-
-| Column       | Data Type            | Description                                                    |
-| :---         | :----                | :---                                                           |
-| id           | INTEGER              | An unique ID of opposite agent                              |
-| first_name   | VARCHAR(50) NOT NULL | First name of opposite agent                                   |
-| middle_name  | VARCHAR(50)          | Middle name of opposite agent                                  |
-| last_name    | VARCHAR(50) NOT NULL | Last name of opposite agent                                    |
-| email        | VARCHAR(50)          | Email of opposite agent                                        |
-| phone        | VARCHAR(50)          | Phone number of opposite agent                                 |
-| street_name  | VARCHAR(100)         | The part of the opposite agent's address below the street name |
-| district     | VARCHAR(20)          | The district name of opposite agent's address                  |
-| city         | VARCHAR(20)          | The city name of opposite agent's address                      |
-| zip_code     | VARCHAR(10)          | The city name of opposite agent's address                      |
+| Column            | Data Type            | Description                                              |
+| :---              | :----                | :---                                                     |
+| id                | INTEGER              | An unique ID of opposite                                 |
+| role              | VARCHAR(50) NOT NULL | Identify the opposite is party or agent                  |
+| organization_name | VARCHAR(100)         | The name of organization                                 |
+| first_name        | VARCHAR(50) NOT NULL | First name of opposite                                   |
+| middle_name       | VARCHAR(50)          | Middle name of opposite                                  |
+| last_name         | VARCHAR(50) NOT NULL | Last name of opposite                                    |
+| email             | VARCHAR(50)          | Email of opposite                                        |
+| phone             | VARCHAR(50)          | Phone number of opposite                                 |
+| street_name       | VARCHAR(100)         | The part of the opposite's address below the street name |
+| district          | VARCHAR(20)          | The district name of opposite's address                  |
+| city              | VARCHAR(20)          | The city name of opposite's address                      |
+| zip_code          | VARCHAR(10)          | The city name of opposite's address                      |
 
 #### `courts`
 
@@ -247,13 +230,11 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | type                  | VARCHAR(50)          | Means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
 | number                | VARCHAR(20)          | Number of cases                                 |
 | cause_of_action       | VARCHAR(100)              | Which means “案由” in Chinese like “拆屋還地”          |
-| event_id              |INTEGER NOT NULL      | Associated with event ID mark the same case in whole lawsuit procedure to one event|
-| section_in_charges_id | INTEGER              | Associated with section_in_charge ID indicate which section in charge is handling this case |
-| court_id             | INTEGER              | Associated with court ID, indicate which court is handling this case            |
-| client_id             | INTEGER NOT NULL     | Associated with user ID, to identify which client was involved in this case              |
-| agent_id              | INTEGER NOT NULL     | Associated with user ID, to identify which agent in charge of this case              |
-| opposite_client_id    | INTEGER              | Associated with opposite client ID, to identify which opposite client was involved in this case   |
-| opposite_agent_id     | INTEGER              | Associated with opposite agent ID, to identify which opposite''s agent in charge of this case     |
+| event_id              |INTEGER NOT NULL      | References the id column in event, marks the same case in whole lawsuit procedure to one event|
+| section_in_charges_id | INTEGER              | References the id column in section_in_charge, indicates which section in charge is handling this case |
+| court_id             | INTEGER              |References the id column in court, indicates which court is handling this case            |
+| user_id             | INTEGER     | References the id column in user to identify which user was involved in this case              |
+| opposite_id    | INTEGER              | References the id column in opposite, to identify which opposite was involved in this
 
 #### `paper_files`
 
