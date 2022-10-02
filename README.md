@@ -125,7 +125,7 @@ At the same time, `docker-compose` will also create a network and put the contai
 
 ## Database Schema
 
-![Database Schema](attorneytech-database-schema.png)
+![Database Schema](images/attorneytech-database-schema.png)
 
 [docker-compose-example]: <docker-compose-example.yaml>
 
@@ -230,21 +230,29 @@ Basically, in a law firm, it can be said that it operates by handling cases. Cre
 | type                  | VARCHAR(50)          | Means “案號字別” in Chinese. For example, like “訴”, “上”, “重訴”, “勞訴”, etc.                                                                                             |
 | number                | VARCHAR(20)          | Number of cases                                 |
 | cause_of_action       | VARCHAR(100)              | Which means “案由” in Chinese like “拆屋還地”          |
-| event_id              |INTEGER NOT NULL      | References the id column in event, marks the same case in whole lawsuit procedure to one event|
-| section_in_charges_id | INTEGER              | References the id column in section_in_charge, indicates which section in charge is handling this case |
-| court_id             | INTEGER              |References the id column in court, indicates which court is handling this case            |
-| user_id             | INTEGER     | References the id column in user to identify which user was involved in this case              |
-| opposite_id    | INTEGER              | References the id column in opposite, to identify which opposite was involved in this
+| event_id              |INTEGER NOT NULL      | References the id column in events, marks the same case in whole lawsuit procedure to one event|
+| section_in_charges_id | INTEGER              | References the id column in section_in_charges, indicates which section in charge is handling this case |
+| court_id             | INTEGER              |References the id column in courts, indicates which court is handling this case            |
 
-#### `paper_files`
+#### `cases_users`
 
-Paper's files
+Join table of cases and users
 
-| Column | Data Type                    | Description                           |
-| :---   | :----                        | :---                                  |
-| id     | INTEGER                      | An unique ID of paper file            |
-| name   | VARCHAR(100) UNIQUE NOT NULL | Name of aper file                     |
-| file   | bytea NOT NULL               | Paper file, store in bytea data type. |
+| Column  | Data Type | Description                       |
+| :---    | :----     | :---                              |
+| id      | INTEGER   | An unique ID of cases_users       |
+| case_id | INTEGER   | References the id column in cases |
+| user_id | INTEGER   | References the id column in users |
+
+#### `cases_opposites`
+
+Join table of cases and opposites
+
+| Column      | Data Type | Description                           |
+| :---        | :----     | :---                                  |
+| id          | INTEGER   | An unique ID of cases_opposites       |
+| case_id     | INTEGER   | References the id column in cases     |
+| opposite_id | INTEGER   | References the id column in opposites |
 
 #### `papers`
 
