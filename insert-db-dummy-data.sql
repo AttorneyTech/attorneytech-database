@@ -1,30 +1,48 @@
-INSERT INTO users (role, username, password, first_name, last_name, email,
-    phone, street_name, district, city, zip_code)
+INSERT INTO users (
+    role,
+    username,
+    password,
+    first_name,
+    last_name,
+    email,
+    phone,
+    street_name,
+    district,
+    city,
+    zip_code
+)
 VALUES
     ('client', 'client_1', 'password_1', '青竹', '林', 'abc@gmail.com', '0912345678',
-    '博愛路 356 號', '中正區', '台北市', '100'),
+    '博愛路 356 號', '中正區', '臺北市', '100'),
     ('client', 'client_2', 'password_2', '啟方', '吳', 'def@gmail.com', '0912345879',
-    '西園路一段 200 號 8 樓', '萬華區', '台北市', '108'),
+    '西園路一段 200 號 8 樓', '萬華區', '臺北市', '108'),
     ('client', 'client_3', 'password_3', '俊文', '陳', 'ghi@gmail.com', '0955323879',
-    '工業路 12 號', '大里區', '台中市', '412'),
+    '工業路 12 號', '大里區', '臺中市', '412'),
     ('client', 'client_4', 'password_4', '至山', '黃', 'weqwek232@gmail.com', '0993345879',
     '中和路三段 483 號 12 樓之 3', '中和區', '新北市', '235'),
     ('agent', 'agent_1', 'password_1a', '律師', '謝', 'lawyear1@gmail.com', '0924345678',
-    '敦化南路一段 345 號 18 樓', '大安區', '台北市', '106');
+    '敦化南路一段 345 號 18 樓', '大安區', '臺北市', '106');
 
 
-INSERT INTO opposite_clients (name, first_name, last_name, street_name, district, city, zip_code)
+INSERT INTO opposites (
+    role,
+    organization_name,
+    first_name,
+    last_name,
+    email,
+    phone,
+    street_name,
+    district,
+    city,
+    zip_code
+)
 VALUES
-    (NULL, '紀雯', '劉', '木柵路二段 12 號 3 樓', '文山區', '臺北市', '116'),
-    (NULL, '佩君', '張', '英專路一段 231 巷 18 號 2 樓', '淡水區', '臺北市', '251'),
-    ('臺北市政府', NULL, NULL, '市府路1號', '信義區', '臺北市', '110'),
-    ('臺北地方檢察署檢察官', NULL, NULL, '博愛路 131 號', '中正區', '臺北市', '100');
-
-
-INSERT INTO opposite_agents (first_name, last_name, email, phone, street_name, district, city, zip_code)
-VALUES
-    ('律師', '江', 'lawyerc@gmail.com', '0233451234','松仁路 2 號 20 樓', '信義區', '臺北市', '110'),
-    ('律師', '盧', 'lawyerlu@gmail.com', '0223567542', '南京東路二段 12 號 7 樓', '中山區', '臺北市', '104');
+    ('party', NULL, '紀雯', '劉', NULL, NULL, '木柵路二段 12 號 3 樓', '文山區', '臺北市', '116'),
+    ('party', NULL, '佩君', '張', NULL, NULL, '英專路一段 231 巷 18 號 2 樓', '淡水區', '臺北市', '251'),
+    ('agent', NULL, '律師', '江', 'lawyerc@gmail.com', '0233451234','松仁路 2 號 20 樓', '信義區', '臺北市', '110'),
+    ('agent', NULL, '律師', '盧', 'lawyerlu@gmail.com', '0223567542', '南京東路二段 12 號 7 樓', '中山區', '臺北市', '104'),
+    ('party', '臺北市政府', NULL, NULL, NULL, '0227208889', '市府路1號', '信義區', '臺北市', '110'),
+    ('party', '臺北地方檢察署檢察官', NULL, NULL, NULL, NULL,'博愛路 131 號', '中正區', '臺北市', '100');
 
 
 INSERT INTO courts (name, phone, street_name, district, city, zip_code)
@@ -90,7 +108,7 @@ VALUES
     '2020-04-11', NULL, NULL, NULL, '答辯狀', 1002),
     ('sent', '民事調查證據聲請狀', '聲請法院調閱原告之勞保投保資料', '2020-07-01',
     '2020-07-02', NULL, NULL, NULL, '調查證據聲請狀', 1002),
-    ('ent', '民事綜合辯論意旨狀', '答辯重點整理', '2020-10-11', 
+    ('ent', '民事綜合辯論意旨狀', '答辯重點整理', '2020-10-11',
     '2020-10-12', NULL, NULL, NULL, '綜合辯論意旨狀', 1002),
     ('received', '民事綜合辯論意旨狀', '原告之重點整理', NULL, NULL,
     '2020-11-01', NULL, NULL, '綜合辯論意旨狀', 1002),

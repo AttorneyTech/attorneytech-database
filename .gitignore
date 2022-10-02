@@ -1,7 +1,7 @@
-# The file of macOS system 
+# The file of macOS system
 .DS_Store
 
-# Python virtual environment files
+# Python venv
 .venv
 
 # Initial the dummy data of database
