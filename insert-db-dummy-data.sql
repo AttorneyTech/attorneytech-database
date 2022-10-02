@@ -37,12 +37,12 @@ INSERT INTO opposites (
     zip_code
 )
 VALUES
-    (party, NULL, '紀雯', '劉', NULL, NULL, '木柵路二段 12 號 3 樓', '文山區', '臺北市', '116'),
-    (party, NULL, '佩君', '張', NULL, NULL, '英專路一段 231 巷 18 號 2 樓', '淡水區', '臺北市', '251'),
-    (agent, NULL, '律師', '江', 'lawyerc@gmail.com', '0233451234','松仁路 2 號 20 樓', '信義區', '臺北市', '110'),
-    (agent, NULL, '律師', '盧', 'lawyerlu@gmail.com', '0223567542', '南京東路二段 12 號 7 樓', '中山區', '臺北市', '104'),
-    (party, '臺北市政府', NULL, NULL, NULL, '0227208889', '市府路1號', '信義區', '臺北市', '110'),
-    (party, '臺北地方檢察署檢察官', NULL, NULL, NULL, NULL,'博愛路 131 號', '中正區', '臺北市', '100');
+    ('party', NULL, '紀雯', '劉', NULL, NULL, '木柵路二段 12 號 3 樓', '文山區', '臺北市', '116'),
+    ('party', NULL, '佩君', '張', NULL, NULL, '英專路一段 231 巷 18 號 2 樓', '淡水區', '臺北市', '251'),
+    ('agent', NULL, '律師', '江', 'lawyerc@gmail.com', '0233451234','松仁路 2 號 20 樓', '信義區', '臺北市', '110'),
+    ('agent', NULL, '律師', '盧', 'lawyerlu@gmail.com', '0223567542', '南京東路二段 12 號 7 樓', '中山區', '臺北市', '104'),
+    ('party', '臺北市政府', NULL, NULL, NULL, '0227208889', '市府路1號', '信義區', '臺北市', '110'),
+    ('party', '臺北地方檢察署檢察官', NULL, NULL, NULL, NULL,'博愛路 131 號', '中正區', '臺北市', '100');
 
 
 INSERT INTO courts (name, phone, street_name, district, city, zip_code)
