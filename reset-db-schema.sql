@@ -242,11 +242,7 @@ CREATE TABLE cases (
   cause_of_action VARCHAR(100),
   event_id INTEGER REFERENCES events(id) NOT NULL,
   section_in_charge_id INTEGER REFERENCES section_in_charges(id),
-  court_id INTEGER REFERENCES courts(id),
-  client_id INTEGER REFERENCES users(id) NOT NULL,
-  agent_id INTEGER REFERENCES users(id) NOT NULL,
-  opposite_client_id INTEGER REFERENCES opposite_clients(id) NOT NULL,
-  opposite_agent_id INTEGER REFERENCES opposite_agents(id)
+  court_id INTEGER REFERENCES courts(id)
 );
 
 /* Comment of cases table */
@@ -289,18 +285,53 @@ indicate which section in charge is handling this case.';
 COMMENT ON COLUMN cases.court_id IS
 'Associated with court ID, indicate which court is handling this case.';
 
-COMMENT ON COLUMN cases.client_id IS
-'Associated with user ID, to identify which client was involved in this case.';
+/* Create table of cases_users */
+DROP TABLE IF EXISTS cases_users CASCADE;
 
-COMMENT ON COLUMN cases.agent_id IS
-'Associated with user ID, to identify which agent in charge of this case.';
+CREATE TABLE cases_users (
+  id INTEGER GENERATED ALWAYS AS IDENTITY
+  (START WITH 1 INCREMENT BY 34) PRIMARY KEY,
+  case_id INTEGER REFERENCES cases(id) NOT NULL,
+  user_id INTEGER REFERENCES users(id) NOT NULL
+);
 
-COMMENT ON COLUMN cases.opposite_client_id IS
-'Associated with opposite client ID, to identify which opposite client was involved in this case.';
+/* Comment of cases_users table */
+COMMENT ON TABLE cases_users IS
+'Join table of cases and users.';
 
-COMMENT ON COLUMN cases.opposite_agent_id IS
-'Associated with opposite agent ID, to identify which opposite''s agent in charge of this case.';
+/* Comments of cases_users table's columns */
+COMMENT ON COLUMN cases_users.id IS
+'An unique ID of cases_users.';
 
+COMMENT ON COLUMN cases_users.case_id IS
+'References the id column in cases.';
+
+COMMENT ON COLUMN cases_users.user_id IS
+'References the id column in users.';
+
+/* Create table of cases_opposites */
+DROP TABLE IF EXISTS cases_opposites CASCADE;
+
+CREATE TABLE cases_opposites (
+  id INTEGER GENERATED ALWAYS AS IDENTITY
+  (START WITH 3 INCREMENT BY 27) PRIMARY KEY,
+  case_id INTEGER REFERENCES cases(id) NOT NULL,
+  opposite_id INTEGER REFERENCES opposites(id) NOT NULL
+);
+
+/* Comment of cases_opposites table */
+COMMENT ON TABLE cases_opposites IS
+'Join table of cases and opposites.';
+
+/* Comments of cases_opposites table's columns */
+COMMENT ON COLUMN cases_opposites.id IS
+'An unique ID of cases_opposites.';
+
+COMMENT ON COLUMN cases_opposites.case_id IS
+'References the id column in cases.';
+
+COMMENT ON COLUMN cases_opposites.opposite_id IS
+'References the id column in opposites.';
 
 /* Create table of paper_files */
 DROP TABLE IF EXISTS paper_files CASCADE;

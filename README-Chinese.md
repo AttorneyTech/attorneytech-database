@@ -229,10 +229,26 @@ $ docker-compose up -d
 | event_id              |INTEGER NOT NULL      | 關聯事件的 ID|
 | section_in_charges_id | INTEGER              | 該案件承辦股別的 ID|
 | court_id             | INTEGER               | 該案件承審法院的 ID|
-| client_id             | INTEGER NOT NULL     | 該案件當事人 (客戶)的 ID|
-| agent_id              | INTEGER NOT NULL     | 該案件代理人 (承辦律師)的 ID|
-| opposite_client_id    | INTEGER              | 該案件對造當事人的 ID|
-| opposite_agent_id     | INTEGER              | 該案件對造代理人的 ID|
+
+#### `cases_users`
+
+Cases 及 users 之 Join table
+
+| Column  | Data Type | Description              |
+| :---    | :----     | :---                     |
+| id      | INTEGER   | cases_users 的 unique ID |
+| case_id | INTEGER   | cases 的 unique ID       |
+| user_id | INTEGER   | users 的 unique ID       |
+
+#### `cases_opposites`
+
+Cases 及 opposites 之 Join table
+
+| Column      | Data Type | Description              |
+| :---        | :----     | :---                     |
+| id          | INTEGER   | cases_users 的 unique ID |
+| case_id     | INTEGER   | cases 的 unique ID       |
+| opposite_id | INTEGER   | opposite 的 unique ID    |
 
 #### `paper_files (書狀檔案)`
 
@@ -244,7 +260,7 @@ Paper's files
 | name   | VARCHAR(100) UNIQUE NOT NULL | 書狀檔案的檔名               |
 | file   | bytea NOT NULL               | 書狀檔案 儲存為 bytea 資料型態 |
 
-#### `papers (樹狀)`
+#### `papers (書狀)`
 
 Contains _**paper_sent (書狀遞狀時間)**_ and _**paper_received (書狀收到時間)**_.
 在 `category` 輸入 `paper_sent` 或 `paper_received` 以辨認該 row 是屬於事務所寄出的還是收到的書狀。
